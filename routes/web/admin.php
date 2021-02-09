@@ -70,7 +70,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('task', TaskController::class)->names('task');
 
     Route::resource('type', TypeController::class)->names('type');
-    /* Route::get('type', [HomeController::class, 'dale'])->name('codeway'); */
 
     Route::resource('user', UserController::class)->names('user');
 

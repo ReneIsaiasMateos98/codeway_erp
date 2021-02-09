@@ -1,6 +1,9 @@
 @extends('layouts.auth')
+
 @section('title', 'Forgot Password')
+
 @section('content')
+
 <div class="login-box">
     <div class="login-logo">
         <a href="/"><strong>@yield('title')</strong></a>
@@ -22,9 +25,9 @@
                     </div>
                 </div>
                 @error('email')
-                    <div class="alert alert-danger">
-                        <span>{{ $message }}</span>
-                    </div>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
                 <div class="d-none">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">

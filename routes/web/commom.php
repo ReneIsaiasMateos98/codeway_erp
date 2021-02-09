@@ -20,19 +20,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('veamos', function () {
-
-    $user = User::find(1);
-    /* $user = User::with('roles', 'groups')->where('id', '=', 1)->get(); */
-
-    return $user->havePermission('category.index');
-});
-
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-    Route::get('dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
 
     Route::get('profile', [ProfileController::class, 'show'])->name('profile');
 

@@ -256,6 +256,7 @@ class RoleComponent extends Component
 
             $this->role_id   = $role->id;
             $this->name      = $role->name;
+
         } catch (\Throwable $th) {
 
             $status = 'error';

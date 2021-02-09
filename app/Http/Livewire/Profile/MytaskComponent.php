@@ -68,7 +68,6 @@ class MytaskComponent extends Component
         $this->proyecto   = $project;
         $this->pivote     = Project::with('tasks', 'users')->where('id', '=', $project->id)->get();
         $this->estados    = Statu::orderBy('id', 'Asc')->where('status', '=', 1)->get();
-        /* $this->tasks      = Task::all(); */
 
         $this->responsable_proyecto = $this->proyecto->responsable;
         $responsable = User::with('profile')->where('name', '=', $this->proyecto->responsable)->first();

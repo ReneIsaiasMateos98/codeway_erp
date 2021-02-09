@@ -3,7 +3,7 @@
 @section('title_postfix', 'Departamentos')
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 @endsection
 
 @section('content_header')

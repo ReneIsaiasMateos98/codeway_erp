@@ -17,9 +17,9 @@
                     </div>
                 </div>
                 @error('name')
-                    <div class="alert alert-danger">
-                        <span>{{ $message }}</span>
-                    </div>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
                 <div class="input-group mb-3">
                     <input type="email" name="email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="Email" required="required">
@@ -30,9 +30,9 @@
                     </div>
                 </div>
                 @error('email')
-                    <div class="alert alert-danger">
-                        <span>{{ $message }}</span>
-                    </div>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
                 <div class="input-group mb-3">
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required="required">
@@ -43,9 +43,9 @@
                     </div>
                 </div>
                 @error('password')
-                    <div class="alert alert-danger">
-                        <span>{{ $message }}</span>
-                    </div>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
                 <div class="input-group mb-3">
                     <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required="required">
