@@ -2,12 +2,8 @@
 
 @section('title_postfix', 'Perfil')
 
-@section('css')
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@endsection
-
 @section('content_header')
-    <div class="card">
+    <div class="card mt-2">
         <div class="card-header">
             <h3 class="card-title">
                 <link class="fas fa-fw fa-home" rel="icon">

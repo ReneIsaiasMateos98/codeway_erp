@@ -35,6 +35,7 @@ class Holiday extends Model
         'available',
         'responsable',
         'commentable',
+        'status',
         'absence_id',
         'period_id',
     ];

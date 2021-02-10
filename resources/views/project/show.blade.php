@@ -2,12 +2,8 @@
 
 @section('title_postfix', 'Mis Proyectos')
 
-@section('css')
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@endsection
-
 @section('content_header')
-    <div class="card">
+    <div class="card mt-2">
         <div class="card-header">
             <h3 class="card-title">
                 <link class="fas fa-fw fa-home" rel="icon">
@@ -29,9 +25,6 @@
 @endsection
 
 @section('js')
-    {{-- <script>
-        $('body_scroll').scrollspy({ target: '#navbar-example' })
-    </script> --}}
     <script>
         window.livewire.on('taskCreatedEvent', ()=>{
             $('#createTask').modal('hide');
@@ -40,13 +33,5 @@
         window.livewire.on('taskUpdatedEvent', ()=>{
             $('#updateTask').modal('hide');
         })
-
-        /* window.livewire.on('projectShowEvent', ()=>{
-            $('#showProject').modal('hide');
-        })
-
-        window.livewire.on('projectDeletedEvent', ()=>{
-            $('#deleteProject').modal('hide');
-        }) */
     </script>
 @endsection

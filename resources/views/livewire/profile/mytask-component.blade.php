@@ -32,11 +32,9 @@
                             <button class="btn btn-dark">Limpiar</button>
                         @endif
                     </div>
-                    @can('haveaccess', 'task.my.create')
-                        <div class="col-lg-2 col-md-3 col-sm-6">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTask">Agregar Tarea</button>
-                        </div>
-                    @endcan
+                    <div class="col-lg-2 col-md-3 col-sm-6">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTask">Agregar Tarea</button>
+                    </div>
                 </div>
             </div>
             <table wire:poll.10000ms id="mitasks">
@@ -111,9 +109,6 @@
                     @endforeach
                 </div>
             </table>
-        </div>
-        <div class="card-footer">
-
         </div>
     </div>
     @include('custom.message')

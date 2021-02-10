@@ -315,8 +315,6 @@ class ProfileComponent extends Component
 
     public function savePassword()
     {
-        Gate::authorize('haveaccess', 'profile.edit');
-
         $this->validate([
             'password'    => 'required|password|min:8|max:100',
             'password1'   => 'required|min:8|max:100|confirmed',

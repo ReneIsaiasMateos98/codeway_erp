@@ -31,7 +31,7 @@
                             @enderror
                         </div>
                         <div class="form-group justify-content-end">
-                            <label class="text-muted" for="endDate">Terminó:</label>
+                            <label class="text-muted" for="endDate">Termino:</label>
                             <input type="date" name="endDate" class="form-control @error('endDate') is-invalid @enderror"
                                     wire:model="endDate" wire:dirty.class="bg-primary">
                             @error('endDate')

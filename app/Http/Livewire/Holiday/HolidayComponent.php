@@ -19,7 +19,7 @@ class HolidayComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $holiday_id, $days, $beginDate, $endDate, $inProcess, $taken, $available, $responsable, $commentable, $created_at, $updated_at, $accion = "store";
+    public $holiday_id, $days, $beginDate, $endDate, $inProcess, $taken, $available, $responsable, $commentable, $status, $created_at, $updated_at, $accion = "store";
 
     public $ausencia, $periodo, $absence_id, $period_id;
 
@@ -34,6 +34,7 @@ class HolidayComponent extends Component
         'available'     => 'numeric|max:100',
         'responsable'   => 'required|string|',
         'commentable'   => '',
+        'status'        => 'required',
         'absence_id'    => 'required',
         'period_id'     => 'required',
     ];
@@ -52,6 +53,7 @@ class HolidayComponent extends Component
         'available'     => 'viables',
         'responsable'   => 'responsable',
         'commentable'   => 'comentario',
+        'status'        => 'estado',
         'absence_id'    => 'ausecia',
         'period_id'     => 'periodo',
     ];
@@ -90,6 +92,7 @@ class HolidayComponent extends Component
                 'available'     => 'numeric|max:100',
                 'responsable'   => 'required|string|',
                 'commentable'   => '',
+                'status'        => 'required',
                 'absence_id'    => 'required',
                 'period_id'     => 'required',
             ]);
@@ -171,6 +174,7 @@ class HolidayComponent extends Component
             $this->available      = $holiday->available;
             $this->responsable    = $holiday->responsable;
             $this->commentable    = $holiday->commentable;
+            $this->status         = $holiday->status;
             $this->absence_id     = $holiday->absence_id;
             $this->period_id      = $holiday->period_id;
             $this->created_at     = $created->format('l jS \\of F Y h:i:s A');
@@ -222,6 +226,7 @@ class HolidayComponent extends Component
             $this->available      = $holiday->available;
             $this->responsable    = $holiday->responsable;
             $this->commentable    = $holiday->commentable;
+            $this->status         = $holiday->status;
             $this->absence_id     = $holiday->absence_id;
             $this->period_id      = $holiday->period_id;
             $this->created_at     = $holiday->created_at;
@@ -254,6 +259,7 @@ class HolidayComponent extends Component
             'available'     => 'numeric|max:100',
             'responsable'   => 'required|string|',
             'commentable'   => '',
+            'status'        => 'required',
             'absence_id'    => 'required',
             'period_id'     => 'required',
         ]);
@@ -279,6 +285,7 @@ class HolidayComponent extends Component
                     'available'    => $this->available,
                     'responsable'  => Auth::user()->name,
                     'commentable'  => $this->commentable,
+                    'status'       => $this->status,
                     'absence_id'   => $this->absence_id,
                     'period_id'    => $this->period_id,
                 ]);
@@ -318,7 +325,7 @@ class HolidayComponent extends Component
             $this->inProcess      = $holiday->inProcess;
             $this->taken          = $holiday->taken;
             $this->available      = $holiday->available;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -376,6 +383,7 @@ class HolidayComponent extends Component
             'available',
             'responsable',
             'commentable',
+            'status',
             'absence_id',
             'period_id',
             'created_at',

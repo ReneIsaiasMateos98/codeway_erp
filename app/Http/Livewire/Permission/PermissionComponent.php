@@ -218,7 +218,7 @@ class PermissionComponent extends Component
 
             $this->permission_id    = $permissions->id;
             $this->name             = $permissions->name;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -243,8 +243,7 @@ class PermissionComponent extends Component
 
             DB::beginTransaction();
 
-            /* Permission::find($this->permission_id)->delete(); */
-            Permission::find($this->permission_id)->deletes();
+            Permission::find($this->permission_id)->delete();
 
             DB::commit();
 
@@ -299,7 +298,7 @@ class PermissionComponent extends Component
         return view(
             'livewire.permission.permission-component',
             [
-                'permissions' => Permission::latest('id')
+                'permissions' => Permission::orderBy('id','Asc')
                     ->where('name', 'LIKE', "%{$this->search}%")
                     ->orWhere('slug', 'LIKE', "%{$this->search}%")
                     ->orWhere('description', 'LIKE', "%{$this->search}%")

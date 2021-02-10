@@ -52,7 +52,7 @@
                             @enderror --}}
                         </div>
                         <div class="form-group justify-content-end">
-                            <label class="text-muted" for="end">Terminó:</label>
+                            <label class="text-muted" for="end">Termino:</label>
                             <input type="date" name="end" wire:dirty.class="bg-success"
                                 class="form-control @error('end') is-invalid @enderror" wire:model="end">
                             @error('end')
@@ -155,9 +155,7 @@
                     <div wire:loading wire:loading.class="bg-white">Procesando datos...</div>
                 </div>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click.prevent="clean()">Cancelar</button>
-                @can('haveaccess', 'task.my.create')
-                    <button type="button" class="btn btn-success" wire:click.prevent="update()">Actualizar Tarea</button>
-                @endcan
+                <button type="button" class="btn btn-success" wire:click.prevent="update()">Actualizar Tarea</button>
             </div>
         </div>
     </div>

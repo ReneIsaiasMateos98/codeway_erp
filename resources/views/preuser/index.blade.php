@@ -2,19 +2,12 @@
 
 @section('title_postfix', 'Aspirantes')
 
-@section('css')
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
-@endsection
-
 @section('content_header')
-    <div class="card">
+    <div class="card mt-2">
         <div class="card-header">
             <h3 class="card-title">
                 <link class="fas fa-fw fa-home" rel="icon">
                 <a class="text-uppercase" href="{{ route('home') }}">Codeway</a>
-                /
-                <link class="fas fa-fw fa-clipboard" rel="icon">
-                <a class="text-uppercase" href="{{ route('vacant.index') }}">Vacantes</a>
                 /
                 <link class="fas fa-fw fa-portrait" rel="icon">
                 <a class="text-uppercase" href="{{ route('preuser.index') }}">Aspirantes</a>

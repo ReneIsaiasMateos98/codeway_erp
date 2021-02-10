@@ -211,8 +211,6 @@ class UserComponent extends Component
     public function show(User $user)
     {
         Gate::authorize('view', [$user, ['user.show', 'userown.show']]);
-        /* Gate::authorize('haveaccess', 'user.show');
-        Gate::authorize('haveaccess', 'userown.show');*/
 
         try {
 
@@ -316,8 +314,6 @@ class UserComponent extends Component
 
     public function edit(User $user)
     {
-        /* Gate::authorize('haveaccess', 'user.edit');
-        Gate::authorize('haveaccess', 'userown.edit'); */
         Gate::authorize('view', [$user, ['user.edit', 'userown.edit']]);
 
         try {

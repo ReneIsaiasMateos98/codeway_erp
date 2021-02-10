@@ -40,7 +40,7 @@
                             <th scope="col">Usuario</th>
                             <th scope="col">Días</th>
                             <th scope="col">Inicio</th>
-                            <th scope="col">Terminó</th>
+                            <th scope="col">Termino</th>
                             <th scope="col">Proceso</th>
                             <th scope="col">Tomadas</th>
                             <th scope="col">Viables</th>

@@ -30,7 +30,7 @@
                         <h5>{{ $start }}</h5>
                     </div>
                     <div class="form-group">
-                        <label class="text-muted" for="description">Terminó:</label>
+                        <label class="text-muted" for="description">Termino:</label>
                         <h5>{{ $end }}</h5>
                     </div>
                     <div class="form-group">

@@ -2,14 +2,9 @@
     <div class="card">
         <div class="card-header bg-secondary">
             <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                     <h4 class="text-uppercase">Lista de Permisos</h4>
                 </div>
-                {{-- <div class="col-4">
-                    @can('haveaccess', 'permission.create')
-                        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#createPermission_XD">Agregar Permiso</button>
-                    @endcan
-                </div> --}}
             </div>
         </div>
         <div class="card-body">
@@ -69,9 +64,6 @@
                                         @can('haveaccess', 'permission.edit')
                                             <button type="button" wire:click.prevent="edit({{ $permiso->id }})" class="btn btn-success" data-toggle="modal" data-target="#updatePermission">Editar</button>
                                         @endcan
-                                        @can('haveaccess', 'permission.destroy')
-                                            {{-- <button type="button" wire:click.prevent="delete({{ $permiso->id }})" class="btn btn-danger" data-toggle="modal" data-target="#deletePermission">Borrar</button> --}}
-                                        @endcan
                                     </div>
                                 </td>
                             </tr>
@@ -102,8 +94,6 @@
         </div>
     </div>
     @include('custom.message')
-    {{-- @include('livewire.permission.create') --}}
     @include('livewire.permission.show')
     @include('livewire.permission.update')
-    {{-- @include('livewire.permission.delete') --}}
 </div>

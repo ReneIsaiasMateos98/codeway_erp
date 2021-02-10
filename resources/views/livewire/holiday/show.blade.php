@@ -18,7 +18,7 @@
                         <h5>{{ $beginDate }}</h5>
                     </div>
                     <div class="form-group">
-                        <label class="text-muted" for="endDate">Terminó:</label>
+                        <label class="text-muted" for="endDate">Termino:</label>
                         <h5>{{ $endDate }}</h5>
                     </div>
                     <div class="form-group">

@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="end">Terminó:</label>
+                                <label class="text-muted" for="end">Termino:</label>
                                 <input type="date" name="end" class="form-control @error('end') is-invalid @enderror"
                                         wire:model="end" wire:dirty.class="bg-primary">
                                 @error('end')

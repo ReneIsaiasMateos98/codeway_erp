@@ -119,8 +119,6 @@ class MytaskComponent extends Component
 
     public function store()
     {
-        Gate::authorize('haveaccess', 'task.my.create');
-
         $this->validate([
             'name'          => 'required|string|max:200|unique:tasks,name',
             'description'   => 'required|string|',
@@ -227,8 +225,6 @@ class MytaskComponent extends Component
 
     public function update()
     {
-        Gate::authorize('haveaccess', 'task.my.edit');
-
         $this->validate([
             'name'          => 'required|string|max:200|unique:tasks,name,' . $this->task_id,
             'description'   => 'required|string',

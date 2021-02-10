@@ -25,6 +25,7 @@ class CreateHolidaysTable extends Migration
             $table->double('available')->nullable();
             $table->string('responsable', 100)->nullable();
             $table->text('commentable')->nullable();
+            $table->boolean('status')->default('0');
             $table->foreignId('absence_id')->nullable()->references('id')->on('absences')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('period_id')->references('id')->on('periods')->onDelete('cascade')->onUpdate('cascade');
 

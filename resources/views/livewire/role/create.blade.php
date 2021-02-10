@@ -92,8 +92,7 @@
                                     @empty
                                         <li>No hay permisos registrados</li>
                                     @endforelse
-                                </div><br>
-                                <a class="btn btn-light justify-center" href="{{ route('permission.index') }}" value="reset">Ver Permisos</a>
+                                </div>
                             </div>
                         </div>
                     @endif

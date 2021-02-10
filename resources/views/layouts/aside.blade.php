@@ -1,5 +1,5 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="{{ url('/home') }}" class="brand-link elevation-2">
+<aside class="main-sidebar sidebar-dark-primary elevation-3">
+    <a href="{{ url('/home') }}" class="brand-link elevation-1">
         <img src="{{ asset('favicons/logo_codeway.png') }}" class="logo_empresa">
     </a>
     <div class="sidebar">
@@ -203,6 +203,11 @@
                         <p>Mis Eventos</p>
                     </a>
                 </li> --}}
+                <button class="btn btn-outline-danger">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-white">
+                        Cerrar Sesión
+                    </a>
+                </button>
             </ul>
         </nav>
     </div>

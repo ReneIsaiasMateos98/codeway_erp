@@ -40,7 +40,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Título</th>
                             <th scope="col">Inicio</th>
-                            <th scope="col">Terminó</th>
+                            <th scope="col">Termino</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Creado</th>
                             <th scope="col">Actualizado</th>
