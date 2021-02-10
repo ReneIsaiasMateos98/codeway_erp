@@ -7,9 +7,7 @@
 {{-- En esta seccion va algun estilo CSS que queramos agregar --}}
 @section('css')
 
-    {{-- <link rel="stylesheet" href="/css/admin_custom.css">
-
-    <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    {{-- <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> --}}
 
 @endsection

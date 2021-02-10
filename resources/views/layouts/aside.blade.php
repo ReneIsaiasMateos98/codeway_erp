@@ -197,12 +197,12 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('myevent') }}" class="nav-link">
                         <i class="nav-icon fas fa-calendar-check"></i>
                         <p>Mis Eventos</p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
     </div>

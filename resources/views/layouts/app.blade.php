@@ -14,9 +14,8 @@
         {{ config('app.name', 'Codeway') }} | @yield('title_postfix')
     </title>
 
-    {{-- Compilado --}}
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+    <!-- Livewire -->
+    @livewireStyles
 
     <!-- Fontawesome -->
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"> --}}
@@ -30,14 +29,16 @@
     <!-- Fonts -->
     {{-- <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet"> --}}
 
+    {{-- Compilado --}}
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
     {{-- Toastr --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     {{-- Css --}}
     @yield('css')
 
-    <!-- Livewire -->
-    @livewireStyles
+
 
 </head>
 
@@ -84,6 +85,9 @@
 
         </div>
 
+        {{-- Livewire --}}
+        @livewireScripts
+
         {{-- Compilado --}}
         <script src="{{ mix('js/vendor.js') }}"></script>
         <script src="{{ mix('js/app.js') }}"></script>
@@ -108,8 +112,8 @@
         {{-- js --}}
         @yield('js')
 
-        {{-- Livewire --}}
-        @livewireScripts
+
+
 
     </body>
 

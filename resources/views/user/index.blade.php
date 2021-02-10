@@ -30,18 +30,18 @@
     <script>
         window.livewire.on('userCreatedEvent', ()=>{
             $('#createUser').modal('hide');
-        })
+        });
 
         window.livewire.on('userUpdatedEvent', ()=>{
             $('#updateUser').modal('hide');
-        })
+        });
 
         window.livewire.on('userShowEvent', ()=>{
             $('#showUser').modal('hide');
-        })
+        });
 
         window.livewire.on('userDeletedEvent', ()=>{
             $('#deleteUser').modal('hide');
-        })
+        });
     </script>
 @endsection

@@ -186,7 +186,6 @@ class UserComponent extends Component
                 $user->holidays()->sync($vacation->id);
             }
 
-
             /* Envio de email */
             /* Mail::to('admin@admin.com')->queue(new MessageReceived($user)); */
 
