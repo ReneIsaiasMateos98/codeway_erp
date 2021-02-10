@@ -1,10 +1,10 @@
-# SISTEMA DE PLANIFICACIÓN DE RECURSOS EMPRESARIALES CODEWAY SOLUCIONES INTEGRALES
+# SISTEMA DE PLANIFICACIÓN DE RECURSOS EMPRESARIAL CODEWAY SOLUCIONES INTEGRALES
+
+### Este es un sistema de planificación de recursos empresariales para la empresa Codeway Soluciones Integrales con los módulos de recursos humanos y productividad.
 
 ## Configuración de Instalación
 
-Este es un sistema de planificación de recursos empresariales para la empresa Codeway Soluciones Integrales.
-
-Esta en desarrollo, cuenta con los modulos de recursos humanos y productividad
+### Siga estos pasos para llevar a cabo la configuración del sistema
 
 -   Clone este repositorio :
 
@@ -15,6 +15,7 @@ $ git clone https://github.com/ReneIsaiasMateos98/codeway_erp.git
 -   Instale o actulize composer dentro de la carpate de codeway_erp :
 
 ```bash
+  # Solo ejecute una de las dos
 $ composer install || composer update
 ```
 
@@ -27,17 +28,18 @@ $ cp .env.example .env
 -   Configure su sistema gestor de base de datos, usuario y contraseña en el archivo .env :
 
 ```bash
-$ DB_CONNECTION=mysql
-$ DB_HOST=127.0.0.1
-$ DB_PORT=3306
-$ DB_DATABASE=codeway_erp
-$ DB_USERNAME=root
-$ DB_PASSWORD=password
+# Esto se configura dentro del archivo .env
+ DB_CONNECTION=mysql
+ DB_HOST=127.0.0.1
+ DB_PORT=3306
+ DB_DATABASE=codeway_erp
+ DB_USERNAME=root
+ DB_PASSWORD=password
 ```
 
-Guarde cambios y cierre :
+Guarde cambios y cierre
 
--   Genere la llave publica para su proyecto con el comando :
+-   Genere la llave pública para su proyecto con el comando :
 
 ```bash
 $ php artisan key:generate
@@ -49,9 +51,10 @@ $ php artisan key:generate
 $ php artisan migrate
 ```
 
--   Poble la base de datos con siembras y fabricas de datos, para eso configure las siembras que quiera ejecutar asi como las fabricas de datos, estos estan la ruta de :
+-   Poble la base de datos con siembras y fabricas de datos, para eso configure las siembras que quiera ejecutar asi como las fabricas de datos, estos estan en el archivo DatabaseSeeder.php en la ruta de :
 
 ```bash
+#Edite este archivo desde cualquier editor de texto
 $ cd database/seeders/DatabaseSeeder.php
 ```
 
@@ -62,6 +65,7 @@ Solo tenga en cuenta que las siembras de RolSeeder.php y PermissionListSeeder.ph
 -   Ahora para poblar la base de datos ejecute este comando :
 
 ```bash
+#Solo ejecute uno de los dos comandos
 $ php artisan db:seed
 ```
 
@@ -96,6 +100,8 @@ Esta imagen es la que se le asignara a todos los usuarios por defecto.
 ```bash
 $ php artisan serve
 ```
+
+-   Para acceder revise las credenciales quee estan en el archivo RolSeeder.php
 
 ## Software utilizado para este proyecto
 
