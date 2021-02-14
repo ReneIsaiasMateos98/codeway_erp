@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class MytaskComponent extends Component
 {
@@ -24,19 +23,21 @@ class MytaskComponent extends Component
 
     public $proyecto, $tareas, $usuario;
 
-    public $estados;
+    public $estados, $inicia, $termina;
 
     public $task_id, $name, $description, $file, $start, $end, $informer, $responsable, $created_at, $updated_at, $accion = "store";
 
     public $estado, $tipo, $prioridad, $statu_id, $priority_id, $type_id, $temporary, $informador;
 
     public $rules = [
-        'name'          => 'required|string|max:200|unique:tasks,name',
+        'name'          => 'required|string|max:200',
         'description'   => 'required|string',
         'temporary'     => 'file|max:10000|mimes:jpeg,png|nullable|mimetypes:video/mp4',
         'file'          => 'file|max:10000|mimes:jpeg,png|nullable|mimetypes:video/mp4',
-        'start'         => 'required|date|after:tomorrow',
-        'end'           => 'required|date|after:start',
+        'start'         => 'required|date|after_or_equal:today',
+        'end'           => 'required|date|after_or_equal:start',
+        'inicia'        => 'required|date|after_or_equal:today',
+        'termina'       => 'required|date|after_or_equal:start',
         'informer'      => 'required|string|',
         'responsable'   => 'required|string|',
         'statu_id'      => 'required',
@@ -56,6 +57,8 @@ class MytaskComponent extends Component
         'file'          => 'archivo',
         'start'         => 'fecha de inicio',
         'end'           => 'fecha termino',
+        'inicia'        => 'fecha de inicio',
+        'termina'       => 'fecha termino',
         'informer'      => 'informador',
         'responsable'   => 'responsable',
         'statu_id'      => 'estado',
@@ -79,7 +82,6 @@ class MytaskComponent extends Component
 
         $this->informer = $this->responsable_proyecto;
 
-
         $this->usuario = Auth::user()->name;
         $this->responsable = Auth::user()->name;
         $this->resetErrorBag();
@@ -90,11 +92,11 @@ class MytaskComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'name'          => 'required|string|max:200|unique:tasks,name',
+                'name'          => 'required|string|max:200',
                 'description'   => 'required|string',
                 'temporary'     => 'file|max:10000|nullable',
-                'start'         => 'required|date',
-                'end'           => 'required|date',
+                'inicia'        => 'required|date|after_or_equal:today',
+                'termina'       => 'required|date|after_or_equal:start',
                 'informer'      => 'required|string',
                 'responsable'   => 'required|string',
                 'statu_id'      => 'required',
@@ -103,11 +105,11 @@ class MytaskComponent extends Component
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'name'          => 'required|string|max:200|unique:tasks,name,' . $this->task_id,
+                'name'          => 'required|string|max:200,' . $this->task_id,
                 'description'   => 'required|string',
                 'file'          => 'file|max:10000|nullable',
-                'start'         => 'required|date',
-                'end'           => 'required|date',
+                'start'         => 'required|date|after_or_equal:today',
+                'end'           => 'required|date|after_or_equal:start',
                 'informer'      => 'required|string',
                 'responsable'   => 'required|string',
                 'statu_id'      => 'required',
@@ -117,14 +119,18 @@ class MytaskComponent extends Component
         }
     }
 
+    protected $messages = [
+        'start.after_or_equal' => 'El campo fecha de inicio debe ser una fecha posterior o igual a hoy.',
+    ];
+
     public function store()
     {
         $this->validate([
-            'name'          => 'required|string|max:200|unique:tasks,name',
+            'name'          => 'required|string|max:200',
             'description'   => 'required|string|',
             'temporary'     => 'file|max:10000|nullable',
-            'start'         => 'required|date',
-            'end'           => 'required|date',
+            'inicia'        => 'required|date|after_or_equal:today',
+            'termina'       => 'required|date|after_or_equal:start',
             'informer'      => 'required|string',
             'responsable'   => 'required|string',
             'statu_id'      => 'required',
@@ -153,8 +159,8 @@ class MytaskComponent extends Component
                 'slug'          => Str::slug($this->name, '-'),
                 'description'   => $this->description,
                 'file'          => $nameFile,
-                'start'         => $this->start,
-                'end'           => $this->end,
+                'start'         => $this->inicia,
+                'end'           => $this->termina,
                 'informer'      => $this->informer,
                 'responsable'   => Auth::user()->name,
                 'statu_id'      => $this->statu_id,
@@ -165,7 +171,6 @@ class MytaskComponent extends Component
             $task->projects()->sync($this->proyecto->id);
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
@@ -197,9 +202,9 @@ class MytaskComponent extends Component
             $this->name          = $task->name;
             $this->description   = $task->description;
             $this->file          = $task->file;
-            /* $this->start         = $task->start; */
+            $this->start         = $task->start;
             $start               = new Carbon($task->start);
-            $this->start         = $start->toFormattedDateString();
+            $this->start         = $start->format('Y-m-d');
             $this->end           = $task->end;
             $this->informer      = $task->informer;
             $this->responsable   = $task->responsable;
@@ -209,7 +214,6 @@ class MytaskComponent extends Component
             $this->created_at    = $task->created_at;
             $this->updated_at    = $task->updated_at;
             $this->accion        = "update";
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -219,18 +223,17 @@ class MytaskComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
     public function update()
     {
         $this->validate([
-            'name'          => 'required|string|max:200|unique:tasks,name,' . $this->task_id,
+            'name'          => 'required|string|max:200,' . $this->task_id,
             'description'   => 'required|string',
             'temporary'     => 'file|max:10000|nullable',
-            'start'         => 'required|date',
-            'end'           => 'required|date',
+            'start'         => 'required|date|after_or_equal:today',
+            'end'           => 'required|date|after_or_equal:start',
             'informer'      => 'required|string',
             'responsable'   => 'required|string',
             'statu_id'      => 'required',
@@ -271,7 +274,6 @@ class MytaskComponent extends Component
             }
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
@@ -295,7 +297,6 @@ class MytaskComponent extends Component
 
             $this->task_id      = $task->id;
             $this->name         = $task->name;
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -305,7 +306,6 @@ class MytaskComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -321,7 +321,6 @@ class MytaskComponent extends Component
             Task::find($this->task_id)->delete();
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
@@ -350,7 +349,7 @@ class MytaskComponent extends Component
             'temporary',
             'start',
             'end',
-            'informer',
+            /* 'informer', */
             'responsable',
             'statu_id',
             'priority_id',
@@ -380,6 +379,11 @@ class MytaskComponent extends Component
         $priorities = Priority::orderBy('description')->where('status', '=', 1)->get();
 
         $informador = "";
+
+        $fecha = Carbon::now();
+
+        $this->inicia  = $fecha->format('Y-m-d');
+        $this->termina = $fecha->addDay()->format('Y-m-d');
 
         return view(
             'livewire.profile.mytask-component',

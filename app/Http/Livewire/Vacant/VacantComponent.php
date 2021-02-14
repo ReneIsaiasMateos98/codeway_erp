@@ -18,7 +18,7 @@ class VacantComponent extends Component
 
     public $vacant_id, $name, $description, $quantity, $status, $created_at, $updated_at, $accion = "store";
 
-    public $search = '', $perPage = '10', $page = 1, $total;
+    public $search = '', $perPage = '10', $page = 1, $total, $vacantes;
 
     public $rules = [
         'name'         => 'required|string|max:200|unique:vacants,name',
@@ -87,14 +87,12 @@ class VacantComponent extends Component
             ]);
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
 
             $status  = 'error';
             $content = 'Ocurrió un error al agregar la vacante';
-
         }
 
         session()->flash('process_result', [
@@ -121,7 +119,8 @@ class VacantComponent extends Component
             $this->status       = $vacant->status;
             $this->created_at   = $created->format('l jS \\of F Y h:i:s A');
             $this->updated_at   = $updated->format('l jS \\of F Y h:i:s A');
-
+            $this->vacantes     = Vacant::with('preusers')->where('id', '=', $vacant->id)->get();
+            
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -131,7 +130,6 @@ class VacantComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -153,7 +151,6 @@ class VacantComponent extends Component
             $this->quantity     = $vacant->quantity;
             $this->status       = $vacant->status;
             $this->accion       = "update";
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -163,7 +160,6 @@ class VacantComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -197,14 +193,12 @@ class VacantComponent extends Component
             }
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
 
             $status  = 'error';
             $content = 'Ocurrió un error al actualizar la vacante';
-
         }
 
         session()->flash('process_result', [
@@ -224,7 +218,6 @@ class VacantComponent extends Component
 
             $this->vacant_id    = $vacant->id;
             $this->name         = $vacant->name;
-            
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -234,7 +227,6 @@ class VacantComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -252,14 +244,12 @@ class VacantComponent extends Component
             Vacant::find($this->vacant_id)->delete();
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
 
             $status  = 'error';
             $content = 'Ocurrió un error al eliminar la vacante';
-
         }
 
         session()->flash('process_result', [

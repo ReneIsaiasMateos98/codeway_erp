@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vacant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class VacantController extends Controller
@@ -27,7 +28,11 @@ class VacantController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::user()) {
+            return abort(401, "Solo aplica para nuevos aspirantes");
+        } else {
+            return view('vacant.create');
+        }
     }
 
     /**

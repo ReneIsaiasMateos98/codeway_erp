@@ -41,10 +41,10 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="start">Inicio:</label>
-                                <input type="date" name="start" class="form-control @error('start') is-invalid @enderror"
-                                        wire:model="start" wire:dirty.class="bg-primary">
-                                @error('start')
+                                <label class="text-muted" for="inicia">Inicio:</label>
+                                <input type="date" name="inicia" class="form-control @error('inicia') is-invalid @enderror"
+                                        wire:model="inicia" wire:dirty.class="bg-primary">
+                                @error('inicia')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -53,10 +53,10 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="end">Termino:</label>
-                                <input type="date" name="end" class="form-control @error('end') is-invalid @enderror"
-                                        wire:model="end" wire:dirty.class="bg-primary">
-                                @error('end')
+                                <label class="text-muted" for="termina">Termino:</label>
+                                <input type="date" name="termina" class="form-control @error('termina') is-invalid @enderror"
+                                        wire:model="termina" wire:dirty.class="bg-primary">
+                                @error('termina')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

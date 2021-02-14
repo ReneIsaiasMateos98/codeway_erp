@@ -243,7 +243,7 @@ class DepartamentComponent extends Component
 
             $this->departament_id     = $departament->id;
             $this->name               = $departament->name;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -316,7 +316,7 @@ class DepartamentComponent extends Component
 
     public function render()
     {
-        $groups = Group::orderBy('name')->where('status', '=', 1)->get();
+        $groups = Group::orderBy('id','Asc')->where('status', '=', 1)->get();
 
         if ($this->search != '') {
             $this->page = 1;

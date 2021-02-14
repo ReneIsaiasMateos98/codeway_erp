@@ -16,6 +16,8 @@
     <div class="card">
         <div class="card-body login-card-body">
             <form method="POST" action="{{ route('password.email') }}">
+
+                <label class="text-muted" for="description">Correo electronico :</label>
                 <div class="input-group mb-3">
                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="Email" required="required">
                     <div class="input-group-append">
@@ -23,12 +25,13 @@
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+
                 <div class="d-none">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </div>

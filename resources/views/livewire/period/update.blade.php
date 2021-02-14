@@ -11,7 +11,7 @@
                 <form>
                     <div class="form-group">
                         <label class="text-muted" for="description">Descripción:</label>
-                        <input type="text" name="description" wire:dirty.class="bg-success"
+                        <input type="number" name="description" wire:dirty.class="bg-success"
                             class="form-control @error('description') is-invalid @enderror" wire:model="description">
                         @error('description')
                             <span class="invalid-feedback" role="alert">

@@ -1,9 +1,9 @@
 <div>
     <div wire:ignore.self class="row">
         <div class="container col-lg-4 col-md-4">
-            <h4>Imagen de perfil</h4>
-            <h5>Actualice su imagen de perfil</h5>
-            <h5>Agregue una descripción de quien es usted</h5>
+            <h4 class="text-muted">Imagen de perfil</h4>
+            <h5 class="text-muted">Actualice su imagen de perfil</h5>
+            <h5 class="text-muted">Agregue una descripción de quien es usted</h5>
         </div>
         <div class="col-lg-8 col-md-8">
             <div class="container card">
@@ -68,8 +68,8 @@
     <hr>
     <div wire:ignore.self class="row">
         <div class="container col-lg-4 col-md-4">
-            <h4>Información de perfil</h4>
-            <h5>Actualice la información de su perfil</h5>
+            <h4 class="text-muted">Información de perfil</h4>
+            <h5 class="text-muted">Actualice la información de su perfil</h5>
         </div>
         <div class="col-lg-8 col-md-8">
             <div class="container card">
@@ -148,10 +148,10 @@
     <hr>
     <div wire:ignore.self class="row">
         <div class="container col-lg-4 col-md-4">
-            <h4>Información de datos personales y sus redes sociales</h4>
-            <h5>Actualice la información de su cuenta</h5>
-            <h5>Actualice la información personal</h5>
-            <h5>Agregue sus redes sociales que utiliza</h5>
+            <h4 class="text-muted">Información de datos personales y sus redes sociales</h4>
+            <h5 class="text-muted">Actualice la información de su cuenta</h5>
+            <h5 class="text-muted">Actualice la información personal</h5>
+            <h5 class="text-muted">Agregue sus redes sociales que utiliza</h5>
         </div>
         <div class="col-lg-8 col-md-8">
             <div class="container card">
@@ -230,8 +230,8 @@
     <hr>
     <div wire:ignore.self class="row">
         <div class="container col-lg-4 col-md-4">
-            <h4>Actualice su contraseña</h4>
-            <h5>Asegúrese de que su cuenta esté usando una contraseña larga y aleatoria para mantenerse seguro</h5>
+            <h4 class="text-muted">Actualice su contraseña</h4>
+            <h5 class="text-muted">Asegúrese de que su cuenta esté usando una contraseña larga y aleatoria para mantenerse seguro</h5>
         </div>
         <div class="col-lg-8 col-md-8">
             <div class="container card">
@@ -281,8 +281,8 @@
         <hr>
         <div wire:ignore.self class="row">
             <div class="container col-lg-4 col-md-4">
-                <h4>Desactivar cuenta</h4>
-                <h5>Mantendrá tu cuenta inactiva</h5>
+                <h4 class="text-muted">Desactivar cuenta</h4>
+                <h5 class="text-muted">Mantendrá tu cuenta inactiva</h5>
             </div>
             <div class="col-lg-8 col-md-8">
                 <div class="container card">
@@ -323,8 +323,8 @@
     @can('haveaccess', 'profile.destroy')
         <div wire:ignore.self class="row">
             <div class="container col-lg-4 col-md-4">
-                <h4>Borrar cuenta</h4>
-                <h5>Elimina permanentemente tu cuenta y datos</h5>
+                <h4 class="text-muted">Borrar cuenta</h4>
+                <h5 class="text-muted">Elimina permanentemente tu cuenta y datos</h5>
             </div>
             <div class="col-lg-8 col-md-8">
                 <div class="container card">

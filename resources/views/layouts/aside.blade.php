@@ -197,12 +197,22 @@
                     </a>
                 </li>
 
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('myevent') }}" class="nav-link">
                         <i class="nav-icon fas fa-calendar-check"></i>
                         <p>Mis Eventos</p>
                     </a>
-                </li> --}}
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('myvacation') }}" class="nav-link">
+                        <i class="nav-icon fas fa-plane-departure"></i>
+                        <p>Mis Vacaciones</p>
+                    </a>
+                </li>
+
+                <hr>
+
                 <button class="btn btn-outline-danger">
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-white">
                         Cerrar Sesión

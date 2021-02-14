@@ -5,11 +5,11 @@
                 <div class="col-8">
                     <h4 class="text-uppercase">Lista de Tareas</h4>
                 </div>
-                <div class="col-4">
+                {{-- <div class="col-4">
                     @can('haveaccess', 'task.create')
                         <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#createTask">Agregar Tarea</button>
                     @endcan
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="card-body">

@@ -28,26 +28,30 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="d-flex justify-content-between mb-auto ">
-                        <div class="form-group justify-content-start">
-                            <label class="text-muted" for="start">Inicio:</label>
-                            <input type="date" name="start" wire:dirty.class="bg-success"
-                                class="form-control @error('start') is-invalid @enderror" wire:model="start">
-                            @error('start')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted" for="start">Inicio:</label>
+                                <input type="date" name="start" wire:dirty.class="bg-success"
+                                    class="form-control @error('start') is-invalid @enderror" wire:model="start">
+                                @error('start')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-group justify-content-end">
-                            <label class="text-muted" for="end">Termino:</label>
-                            <input type="date" name="end" wire:dirty.class="bg-success"
-                                class="form-control @error('end') is-invalid @enderror" wire:model="end">
-                            @error('end')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted" for="end">Termino:</label>
+                                <input type="date" name="end" wire:dirty.class="bg-success"
+                                    class="form-control @error('end') is-invalid @enderror" wire:model="end">
+                                @error('end')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

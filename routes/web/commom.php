@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\VacantController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,5 +31,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('myevent', [ProfileController::class, 'event'])->name('myevent');
 
+    Route::get('myvacation', [ProfileController::class, 'vacation'])->name('myvacation');
+
     Route::get('project/{project}', [ProjectController::class, 'show'])->name('project.show');
 });
+
+Route::get('vacantes', [VacantController::class, 'create'])->name('vacantes');

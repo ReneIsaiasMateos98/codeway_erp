@@ -24,8 +24,8 @@ class EventComponent extends Component
     public $rules = [
         'title'         => 'required|string|max:200|unique:events,title',
         'description'   => 'required|string',
-        'start'         => 'required|date',
-        'end'           => 'required|date',
+        'start'         => 'required|date|after_or_equal:today',
+        'end'           => 'required|date|after_or_equal:start',
         'color'         => 'required|string|max:100',
         'textColor'     => 'required|string|max:100',
         'user_id'       => 'required',
@@ -40,7 +40,7 @@ class EventComponent extends Component
         'title'         => 'título',
         'description'   => 'descripción',
         'start'         => 'fecha inicio',
-        'end'           => 'fecha terminó',
+        'end'           => 'fecha termino',
         'color'         => 'color',
         'textColor'     => 'color de texto',
         'user_id'       => 'usuario',
@@ -60,8 +60,8 @@ class EventComponent extends Component
             $this->validateOnly($propertyName, [
                 'title'         => 'required|string|max:200|unique:events,title',
                 'description'   => 'required|string',
-                'start'         => 'required|date',
-                'end'           => 'required|date',
+                'start'         => 'required|date|after_or_equal:today',
+                'end'           => 'required|date|after_or_equal:start',
                 'color'         => 'required|string|max:100',
                 'textColor'     => 'required|string|max:100',
                 'user_id'       => 'required',
@@ -70,14 +70,18 @@ class EventComponent extends Component
             $this->validateOnly($propertyName, [
                 'title'         => 'required|string|max:200|unique:events,title,' . $this->event_id,
                 'description'   => 'required|string',
-                'start'         => 'required|date',
-                'end'           => 'required|date',
+                'start'         => 'required|date|after_or_equal:today',
+                'end'           => 'required|date|after_or_equal:start',
                 'color'         => 'required|string|max:100',
                 'textColor'     => 'required|string|max:100',
                 'user_id'       => 'required',
             ]);
         }
     }
+
+    protected $messages = [
+        'start.after_or_equal' => 'El campo fecha de inicio debe ser una fecha posterior o igual a hoy.',
+    ];
 
     public function store()
     {
@@ -86,8 +90,8 @@ class EventComponent extends Component
         $this->validate([
             'title'         => 'required|string|max:200|unique:events,title',
             'description'   => 'required|string',
-            'start'         => 'required|date',
-            'end'           => 'required|date',
+            'start'         => 'required|date|after_or_equal:today',
+            'end'           => 'required|date|after_or_equal:start',
             'color'         => 'required|string|max:100',
             'textColor'     => 'required|string|max:100',
             'user_id'       => 'required',
@@ -207,8 +211,8 @@ class EventComponent extends Component
         $this->validate([
             'title'         => 'required|string|max:200|unique:events,title,' . $this->event_id,
             'description'   => 'required|string',
-            'start'         => 'required|date',
-            'end'           => 'required|date',
+            'start'         => 'required|date|after_or_equal:today',
+            'end'           => 'required|date|after_or_equal:start',
             'color'         => 'required|string|max:100',
             'textColor'     => 'required|string|max:100',
             'user_id'       => 'required',
@@ -334,7 +338,7 @@ class EventComponent extends Component
 
     public function render()
     {
-        $usuarios = User::where('status', '=', 1)->get();
+        $usuarios = User::with('profile')->where('status', '=', 1)->get();
 
         if ($this->search != '') {
             $this->page = 1;
@@ -353,8 +357,6 @@ class EventComponent extends Component
                     ->orWhere('description', 'LIKE', "%{$this->search}%")
                     ->orWhere('start', 'LIKE', "%{$this->search}%")
                     ->orWhere('end', 'LIKE', "%{$this->search}%")
-                    ->orWhere('color', 'LIKE', "%{$this->search}%")
-                    ->orWhere('textColor', 'LIKE', "%{$this->search}%")
                     ->paginate($this->perPage)
             ],
             compact('usuarios')

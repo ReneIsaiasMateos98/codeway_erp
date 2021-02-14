@@ -76,7 +76,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="text-muted text-uppercase" for="grupos">Lista de Áreas</label>
-                                <div>
+                                <div class="table-responsive" style="height: 25rem;">
                                     @foreach ($groups as $group)
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input"
@@ -94,7 +94,7 @@
                                     @endforeach
                                 </div>
                                 <div>
-                                    <label class="btn btn-light" value="reset" wire:click="limpia()">Limpiar</label>
+                                    <label class="btn btn-light border" value="reset" wire:click="limpia()">Limpiar</label>
                                 </div>
                             </div>
                         </div>

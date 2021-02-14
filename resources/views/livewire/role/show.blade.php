@@ -61,7 +61,7 @@
                         <div class="col-lg-6 mb-4">
                             <div class="form-group">
                                 <label class="text-muted text-uppercase" for="permisos">Lista de Permisos</label>
-                                <div>
+                                <div class="table-responsive" style="height: 30rem">
                                     @foreach ($permissions as $permission)
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" disabled class="custom-control-input"

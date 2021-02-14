@@ -37,6 +37,31 @@
                         <label class="text-muted" for="updated_at">Actualizado:</label>
                         <h5>{{ $updated_at }}</h5>
                     </div>
+                    <div class="table-responsive">
+                        <h4 class="text-muted text-center text-uppercase">Aspirantes postulados</h4>
+                        <table class="table table-white table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Aspirante</th>
+                                    <th scope="col">Teléfono</th>
+                                    <th scope="col">Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if($vacantes)
+                                    @foreach ($vacantes as $vacante)
+                                        @foreach ($vacante->preusers as $aspirante)
+                                            <tr>
+                                                <th>{{$aspirante->name}} {{$aspirante->lastname}}</th>
+                                                <th>{{$aspirante->phone}}</th>
+                                                <th>{{$aspirante->email}}</th>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

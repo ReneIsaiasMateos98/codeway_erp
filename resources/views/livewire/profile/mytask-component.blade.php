@@ -55,16 +55,15 @@
                                                 <div>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <h6> {{ $task->start }} </h6>
+                                                            <small> {{ $task->start }} </small>
                                                         </div>
                                                         <div class="col-6">
-                                                            <h6> {{ $task->end }} </h6>
+                                                            <small> {{ $task->end }} </small>
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-7">
                                                             @isset($task->type->description)
-                                                                <small>Tipo:</small>
                                                                 <small>{{ $task->type->description }}</small>
                                                             @else
                                                                 <small>Sin tipo</small>
@@ -72,7 +71,6 @@
                                                         </div>
                                                         <div class="col-5">
                                                             @isset($task->priority->description)
-                                                                <small>Prioridad:</small>
                                                                 <small>{{ $task->priority->description }}</small>
                                                             @else
                                                                 <small>Sin prioridad</small>
@@ -80,6 +78,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <hr>
                                                 <div>
                                                     <div class="row">
                                                         <div class="col-6">

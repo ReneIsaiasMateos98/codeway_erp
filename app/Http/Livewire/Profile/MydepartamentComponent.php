@@ -42,9 +42,11 @@ class MydepartamentComponent extends Component
         /* Obtenemos el usuario solmanete que sea igual al que esta logueado */
         $this->usuario = User::with('profile')->where('id', '=', $user->id)->first();
         /* Obtengo el departamento del usuario logueado */
-        $comments = Departament::orderBy('id', 'Desc')->where('id', '=', $this->depa_id)->first();
+        $comments = Departament::orderBy('id', 'Asc')->where('id', '=', $this->depa_id)->first();
         /* Asigno los comentarios del departamento */
-        $this->comentarios = $comments->comments;
+        $comentarios = $comments->comments;
+
+        $this->comentarios = $comentarios->sortByDesc('id');
         /* Obtengo mi usuario con perfil */
         $this->yo = User::with('profile')->where('id', '=', $user->id)->first();
         $this->otros = User::with('profile')->get();
@@ -55,7 +57,6 @@ class MydepartamentComponent extends Component
         try {
             DB::beginTransaction();
             if (($this->message != "") && ($this->depa_id)) {
-
                 $departament = Departament::where('id', '=', $this->depa_id)->first();
 
                 $departament->comments()->create([

@@ -29,7 +29,7 @@
                         <label class="text-muted" for="updated_at">Actualizado:</label>
                         <h5>{{ $updated_at }}</h5>
                     </div>
-                    <div class="form-group ">
+                    {{-- <div class="form-group ">
                         <label class="text-muted text-uppercase" for="updated_at">Vacaciones relacionadas con esta ausencia</label>
                         <div class="table-responsive">
                             <table class="table table-white table-striped table-hover">
@@ -59,7 +59,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
             <div class="modal-footer">

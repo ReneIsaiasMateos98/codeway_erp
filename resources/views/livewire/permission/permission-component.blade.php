@@ -33,7 +33,6 @@
                     <thead>
                         <tr>
                             <th scope="col">Permiso</th>
-                            <th scope="col">Identificador</th>
                             <th scope="col">Descripción</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Creado</th>
@@ -45,7 +44,6 @@
                         @foreach($permissions as $permiso)
                             <tr>
                                 <td>{{ $permiso->name }}</td>
-                                <td>{{ $permiso->slug }}</td>
                                 <td>{{ $permiso->description }}</td>
                                 <td>
                                     @if ($permiso->status == "1")

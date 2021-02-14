@@ -1,7 +1,7 @@
 <div>
     <div class="card">
-        <div class="card-header">
-            <label class="card-title" for="title"><h3 class="text-uppercase">Lista de mis eventos</h3></label>
+        <div class="card-header bg-secondary">
+            <label class="card-title" for="title"><h4 class="text-uppercase">Lista de mis eventos</h4></label>
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#createEvent">Agregar Evento</button>
         </div>
         <div class="card-body">

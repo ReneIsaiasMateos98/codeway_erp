@@ -24,4 +24,10 @@ class ProfileController extends Controller
     {
         return view('profile.event');
     }
+
+    /* Retorna la vista donde se veran las vacaciones del usuario */
+    public function vacation()
+    {
+        return view('profile.vacation');
+    }
 }

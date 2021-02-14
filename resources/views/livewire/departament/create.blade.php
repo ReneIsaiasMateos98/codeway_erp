@@ -50,7 +50,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label class="text-muted text-uppercase" for="grupo">Lista de Áreas</label>
-                                <div>
+                                <div class="table-responsive" style="height: 25rem;">
                                     @forelse ($groups as $grupo )
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input"
@@ -71,8 +71,7 @@
                                     @empty
                                         <li>No hay áreaas registradas</li>
                                     @endforelse
-                                </div><br>
-                                <a class="btn btn-light justify-center" href="{{ route('group.index') }}" value="reset">Ver Áreas</a>
+                                </div>
                             </div>
                         </div>
                     </div>

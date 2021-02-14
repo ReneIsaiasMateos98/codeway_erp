@@ -37,10 +37,8 @@
                 <table wire:poll.10000ms id="eventTable" class="table table-white table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">Usuario</th>
                             <th scope="col">Título</th>
-                            <th scope="col">Inicio</th>
-                            <th scope="col">Termino</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Creado</th>
                             <th scope="col">Actualizado</th>
@@ -52,14 +50,16 @@
                             <tr>
                                 <td>
                                     @isset($event->users[0]->name)
-                                        {{ $event->users[0]->name }}
+                                        @foreach ($usuarios as $usuario)
+                                            @if ($usuario->name == $event->users[0]->name)
+                                                <img src="{{ asset('storage/users/' . $usuario->profile->avatar) }}" width="90px" class="rounded-circle" alt="{{ $usuario->profile->avatar }}">
+                                            @endif
+                                        @endforeach
                                     @else
                                         Sin usuario
                                     @endisset
                                 </td>
                                 <td>{{ $event->title }}</td>
-                                <td>{{ $event->start }}</td>
-                                <td>{{ $event->end }}</td>
                                 <td>
                                     @if ($event->status == "1")
                                         Activo
