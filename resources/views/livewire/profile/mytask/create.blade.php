@@ -68,20 +68,22 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label class="text-muted" for="informer">Informador:</label>
-                                <select wire:model="informer" class="form-control @error('informer') is-invalid @enderror" name="informer" wire:dirty.class="bg-primary">
-                                    <option value="">--Seleccione el informador--</option>
-                                    @foreach($informadores  as $informer)
-                                        <option value="{{ $informer->name }}"
-                                            @isset( $informer->name )
-                                                @if( $informer->name )
-                                                    selected
-                                                @endif
-                                            @endisset
-                                            >
-                                            {{ $informer->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @foreach ($pivote as $pivot)
+                                    <select select wire:model="informer" class="form-control @error('informer') is-invalid @enderror" name="informer" wire:dirty.class="bg-primary">
+                                        <option value="">--Seleccione el informador--</option>
+                                        @foreach ($pivot->users as $user)
+                                            <option value="{{ $user->name }}"
+                                                @isset( $user->name )
+                                                    @if( $user->name )
+                                                        selected
+                                                    @endif
+                                                @endisset
+                                                >
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endforeach
                                 @error('informer')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

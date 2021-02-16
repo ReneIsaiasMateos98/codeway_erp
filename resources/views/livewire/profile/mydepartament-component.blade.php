@@ -12,6 +12,7 @@
         </div>
         <div class="table-responsive px-1" style="height: 25rem;">
             <div class="card-body">
+                @isset($comentarios)
                 @foreach ($comentarios as $comentario)
                 <div class="row">
                     @if ($comentario->user_id == $yo->id)
@@ -45,6 +46,7 @@
                     @endif
                 </div>
                 @endforeach
+                @endisset
             </div>
         </div>
         <div class="card-footer">

@@ -26,7 +26,6 @@ class Holiday extends Model
      * @var array
      */
     protected $fillable = [
-        'slug',
         'days',
         'beginDate',
         'endDate',

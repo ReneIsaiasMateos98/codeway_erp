@@ -24,7 +24,6 @@ class HolidayFactory extends Factory
     {
         $title = $this->faker->sentence(5);
         return [
-            'slug'          => Str::slug($title,'-'),
             'days'          => rand(1, 6),
             'beginDate'     => '2020-01-01',
             'endDate'       => '2021-01-01',

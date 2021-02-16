@@ -10,71 +10,32 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label class="text-muted" for="days">Días:</label>
-                        <input type="number" name="days" class="form-control @error('days') is-invalid @enderror"
-                                wire:model="days" wire:dirty.class="bg-primary">
-                        @error('days')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="d-flex justify-content-between mb-auto ">
-                        <div class="form-group justify-content-start">
-                            <label class="text-muted" for="beginDate">Inicio:</label>
-                            <input type="date" name="beginDate" class="form-control @error('beginDate') is-invalid @enderror"
-                                    wire:model="beginDate" wire:dirty.class="bg-primary">
-                            @error('beginDate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="form-group justify-content-end">
-                            <label class="text-muted" for="endDate">Termino:</label>
-                            <input type="date" name="endDate" class="form-control @error('endDate') is-invalid @enderror"
-                                    wire:model="endDate" wire:dirty.class="bg-primary">
-                            @error('endDate')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="inProcess">En proceso:</label>
-                        <input type="number" name="inProcess" class="form-control @error('inProcess') is-invalid @enderror"
-                                wire:model="inProcess" wire:dirty.class="bg-primary">
-                        @error('inProcess')
+                        <label class="text-muted" for="user_id">Usuario </label>
+                        <select wire:model="user_id" class="form-control @error('user_id') is-invalid @enderror" name="user_id" wire:dirty.class="bg-primary">
+                            <option value="">--Seleccione al usuario correspondiente--</option>
+                            @foreach($usuarios as $usuario)
+                                <option value="{{ $usuario->id }}"
+                                    @isset( $usuario->name )
+                                        @if( $usuario->name )
+                                            selected
+                                        @endif
+                                    @endisset
+                                    >
+                                    {{ $usuario->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('user_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label class="text-muted" for="taken">Tomadas:</label>
-                        <input type="number" name="taken" class="form-control @error('taken') is-invalid @enderror"
-                                wire:model="taken" wire:dirty.class="bg-primary">
-                        @error('taken')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="available">Viables:</label>
-                        <input type="number" name="available" class="form-control @error('available') is-invalid @enderror"
-                                wire:model="available" wire:dirty.class="bg-primary">
-                        @error('available')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="commentable">Comentario:</label>
-                        <textarea class="form-control @error('commentable') is-invalid @enderror" name="commentable" wire:model="commentable" wire:dirty.class="bg-primary" rows="3"></textarea>
-                        @error('commentable')
+                        <label class="text-muted" for="beginDate">Fecha de inicio:</label>
+                        <input type="date" name="beginDate" class="form-control @error('beginDate') is-invalid @enderror"
+                                wire:model="beginDate" wire:dirty.class="bg-primary">
+                        @error('beginDate')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -82,31 +43,21 @@
                     </div>
                     <div class="form-group">
                         <label class="text-muted" for="responsable">Responsable:</label>
-                        <input type="text" name="responsable" class="form-control @error('responsable') is-invalid @enderror"
-                                wire:model="responsable" wire:dirty.class="bg-primary" disabled>
-                        @error('responsable')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="absence_id">Ausencia:</label>
-                        <select wire:model="absence_id" class="form-control @error('absence_id') is-invalid @enderror" name="absence_id" wire:dirty.class="bg-primary">
-                            <option value="">--Seleccione la ausencia--</option>
-                            @foreach($ausencias as $ausencia)
-                                <option  value="{{ $ausencia->id }}"
-                                    @isset( $ausencia->description )
-                                        @if( $ausencia->description )
+                        <select wire:model="responsable" class="form-control @error('responsable') is-invalid @enderror" name="responsable" wire:dirty.class="bg-primary">
+                            <option value="">--Seleccione al responsable--</option>
+                            @foreach($responsables as $responsable)
+                                <option  value="{{ $responsable->name }}"
+                                    @isset( $responsable->name )
+                                        @if( $responsable->name )
                                             selected
                                         @endif
                                     @endisset
                                     >
-                                    {{ $ausencia->description }}
+                                    {{ $responsable->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('absence_id')
+                        @error('responsable')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>

@@ -36,7 +36,7 @@ class ProfileComponent extends Component
         'nameUser'          => 'required|string|max:200',
         'firstLastname'     => 'required|string|max:200',
         'secondLastname'    => 'required|string|max:200',
-        'phone'             => 'required|numeric|unique:users,phone',
+        'phone'             => 'required|numeric|digits_between:10,13|unique:users,phone',
         'email'             => 'required|email|unique:users,email',
         'corporative'       => 'required|email|unique:users,corporative',
         /* Define sus redes sociales y fecha de nacimiento */
@@ -124,7 +124,7 @@ class ProfileComponent extends Component
             'nameUser'          => 'required|string|max:200',
             'firstLastname'     => 'required|string|max:200',
             'secondLastname'    => 'required|string|max:200',
-            'phone'             => 'required|numeric|unique:users,phone, ' . $this->user->id,
+            'phone'             => 'required|numeric|digits_between:10,13|unique:users,phone, ' . $this->user->id,
             'email'             => 'required|email|unique:users,email, ' . $this->user->id,
             'corporative'       => 'required|email|unique:users,corporative, ' . $this->user->id,
 
@@ -219,7 +219,7 @@ class ProfileComponent extends Component
             'nameUser'          => 'required|string|max:200',
             'firstLastname'     => 'required|string|max:200',
             'secondLastname'    => 'required|string|max:200',
-            'phone'             => 'required|numeric|unique:users,phone, ' . $this->user->id,
+            'phone'             => 'required|numeric|digits_between:10,13|unique:users,phone, ' . $this->user->id,
             'email'             => 'required|email|unique:users,email, ' . $this->user->id,
             'corporative'       => 'required|email|unique:users,corporative, ' . $this->user->id,
         ]);

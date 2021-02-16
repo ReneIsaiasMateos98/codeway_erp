@@ -32,11 +32,11 @@ class MytaskComponent extends Component
     public $rules = [
         'name'          => 'required|string|max:200',
         'description'   => 'required|string',
-        'temporary'     => 'file|max:10000|mimes:jpeg,png|nullable|mimetypes:video/mp4',
+        'temporary'     => 'file|mimetypes:video/mp4,application/pdf,application/docx,image/png,image/jpg,image/jpeg|max:10000|nullable',
         'file'          => 'file|max:10000|mimes:jpeg,png|nullable|mimetypes:video/mp4',
         'start'         => 'required|date|after_or_equal:today',
-        'end'           => 'required|date|after_or_equal:start',
         'inicia'        => 'required|date|after_or_equal:today',
+        'end'           => 'required|date|after_or_equal:start',
         'termina'       => 'required|date|after_or_equal:start',
         'informer'      => 'required|string|',
         'responsable'   => 'required|string|',

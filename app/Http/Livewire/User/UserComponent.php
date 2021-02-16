@@ -36,7 +36,7 @@ class UserComponent extends Component
         'nameUser'       => 'required|string|max:100',
         'firstLastname'  => 'required|string|max:100',
         'secondLastname' => 'required|string|max:100',
-        'phone'          => 'required|numeric|min:10|max:15|size:10',
+        'phone'          => 'required|numeric|digits_between:10,13',
         'name'           => 'required|string|max:100|unique:users,name',
         'email'          => 'required|email:rfc,dns,strict,spoof|max:100|unique:users,email',
         'corporative'    => 'required|email|max:100|unique:users,corporative',
@@ -81,7 +81,7 @@ class UserComponent extends Component
                 'nameUser'       => 'required|string|max:100',
                 'firstLastname'  => 'required|string|max:100',
                 'secondLastname' => 'required|string|max:100',
-                'phone'          => 'required|numeric',
+                'phone'          => 'required|numeric|digits_between:10,13',
                 'name'           => 'required|string|max:100|unique:users,name',
                 'email'          => 'required|email|max:100|unique:users,email',
                 'corporative'    => 'required|email|max:100|unique:users,corporative',
@@ -95,7 +95,7 @@ class UserComponent extends Component
                 'nameUser'       => 'required|string|max:100',
                 'firstLastname'  => 'required|string|max:100',
                 'secondLastname' => 'required|string|max:100',
-                'phone'          => 'required|numeric',
+                'phone'          => 'required|numeric|digits_between:10,13',
                 'name'           => 'required|string|max:100|unique:users,name,' . $this->user_id,
                 'email'          => 'required|email|max:100|unique:users,email,' . $this->user_id,
                 'corporative'    => 'required|email|max:100|unique:users,corporative,' . $this->user_id,
@@ -115,7 +115,7 @@ class UserComponent extends Component
             'nameUser'       => 'required|string|max:100',
             'firstLastname'  => 'required|string|max:100',
             'secondLastname' => 'required|string|max:100',
-            'phone'          => 'required|numeric',
+            'phone'          => 'required|numeric|digits_between:10,13',
             'name'           => 'required|string|max:100|unique:users,name',
             'email'          => 'required|email|max:100|unique:users,email',
             'corporative'    => 'required|email|max:100|unique:users,corporative',
@@ -166,7 +166,8 @@ class UserComponent extends Component
 
             if ($period_id) {
                 $beginDate = $fecha->format('Y-m-d');
-                $endDate = $fecha->addYear()->format('Y-m-d');
+                /* $endDate = $fecha->addYear()->format('Y-m-d'); */
+                $endDate = $fecha->subMonth()->addYear()->format('Y-m-d');
 
                 $vacation = Holiday::create([
                     'slug'         => null,
@@ -176,7 +177,7 @@ class UserComponent extends Component
                     'inProcess'    => null,
                     'taken'        => null,
                     'available'    => null,
-                    'responsable'  => null,
+                    'responsable'  => Auth::user()->name,
                     'commentable'  => null,
                     'absence_id'   => null,
                     'period_id'    => $period_id->id,
@@ -189,7 +190,6 @@ class UserComponent extends Component
             /* Mail::to('admin@admin.com')->queue(new MessageReceived($user)); */
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollback();
@@ -361,7 +361,7 @@ class UserComponent extends Component
             'nameUser'       => 'required|string|max:100',
             'firstLastname'  => 'required|string|max:100',
             'secondLastname' => 'required|string|max:100',
-            'phone'          => 'required|numeric',
+            'phone'          => 'required|numeric|digits_between:10,13',
             'name'           => 'required|string|max:100|unique:users,name,' . $this->user_id,
             'email'          => 'required|email|max:100|unique:users,email,' . $this->user_id,
             'corporative'    => 'required|email|max:100|unique:users,corporative,' . $this->user_id,

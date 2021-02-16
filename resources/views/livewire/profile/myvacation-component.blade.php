@@ -1,7 +1,8 @@
 <div>
     <div class="card">
         <div class="card-header bg-secondary">
-            <label for="nombre">{{ $usuario->nameUser }} {{ $usuario->firstLastname }} {{ $usuario->secondLastname }}</label>
+            <label class="text-uppercase" for="nombre">{{ Auth::user()->nameUser }} {{ Auth::user()->firstLastname }} {{ Auth::user()->secondLastname }}</label>
+            {{-- <label class="text-uppercase" for="nombre">{{ $usuario->nameUser }} {{ $usuario->firstLastname }} {{ $usuario->secondLastname }}</label> --}}
         </div>
         <div class="card-body">
             <div class="row">
@@ -107,6 +108,7 @@
                 </div>
                 <div class="col-3">
                     <label class="text-muted" for="responsable">Responsable</label>
+                    <input type="text" name="responsable" class="text-uppercase" value="{{$responsable}}" disabled>
                 </div>
             </div>
             <div class="row">
@@ -125,26 +127,78 @@
                             Dias
                         </div>
                         <div class="card-footer" style="height: 4rem;">
-                            <h3 class="text-center">0</h3>
+                            <h3 wire:model="dias" name="dias" class="text-center">{{$dias}}</h3>
                         </div>
                     </div>
                 </div>
+                <div class="col-3">
+                    @foreach ($usuarios as $usuario)
+                        @if ($usuario->name == $responsable)
+                            <img src="{{ asset('storage/users/' . $usuario->profile->avatar) }}" width="50%" class="rounded-circle" alt="{{ $usuario->profile->avatar }}">
+                        @endif
+                    @endforeach
+                </div>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="text-muted" for="estado">Estado:</label>
+            @if ($status == "1")
+                <h5>Activo</h5>
+            @else
+                <h5>Inactivo</h5>
+            @endif
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-secondary mx-2" wire:click.prevent="clean()">Cancelar</button>
-                <button type="button" class="btn btn-primary" wire:click.prevent="update()">Enviar solicitud</button>
+                <button type="button" class="btn btn-primary" wire:click.prevent="validaDias()">Enviar solicitud</button>
             </div>
         </div>
     </div>
-    <hr><hr>
-    <div>
-        @isset($ausencia)
-            <label for="ausencia">{{$ausencia}}</label>
-        @else
-            <label for="ausencia">No hay ausencia</label>
-        @endisset
-
+    <div class="card">
+        <div class="card-header bg-secondary">
+            <label class="text-uppercase text-muted text-white" for="titulo">Vacaciones tomadas</label>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="vacation" class="table table-white table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Ausencia</th>
+                            <th scope="col">Inicio</th>
+                            <th scope="col">Termino</th>
+                            <th scope="col">Responsable</th>
+                            <th scope="col">Comentario</th>
+                            <th scope="col">Perido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($vacaciones as $vacacion)
+                            @isset($vacacion->users[0])
+                                @if ($vacacion->users[0]->id == Auth::user()->id)
+                                    <tr>
+                                        <td>
+                                            @isset($vacacion->absence->description)
+                                                {{ $vacacion->absence->description }}
+                                            @endisset
+                                        </td>
+                                        <td>{{ $vacacion->beginDate }}</td>
+                                        <td>{{ $vacacion->endDate }}</td>
+                                        <td>{{ $vacacion->responsable }}</td>
+                                        <td>{{ $vacacion->commentario }}</td>
+                                        <td>
+                                            @isset($vacacion->period->description)
+                                                {{ $vacacion->period->description }}
+                                            @endisset
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endisset
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    @include('custom.message')
 </div>

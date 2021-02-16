@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label class="text-muted" for="temporary">Archivo:</label>
-                        <a href="{{ asset('storage/files/' . $file) }}">{{ $file }}</a>
+                        <a href="{{ asset('storage/files/' . $file) }}" target="_blank">{{ $file }}</a>
                         <input type="file" name="temporary" wire:dirty.class="bg-success"
                             class="form-control-file @error('temporary') is-invalid @enderror" wire:model="temporary">
                         @error('temporary')
@@ -68,15 +68,29 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                            <label class="text-muted" for="informer">Informador:</label>
-                            <input type="text" name="informer" wire:dirty.class="bg-success"
-                                class="form-control @error('informer') is-invalid @enderror" wire:model="informer">
-                            @error('informer')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
+                                <label class="text-muted" for="informer">Informador:</label>
+                                @foreach ($pivote as $pivot)
+                                    <select select wire:model="informer" class="form-control @error('informer') is-invalid @enderror" name="informer" wire:dirty.class="bg-success">
+                                        <option value="">--Seleccione el informador--</option>
+                                        @foreach ($pivot->users as $user)
+                                            <option value="{{ $user->name }}"
+                                                @isset( $user->name )
+                                                    @if( $user->name )
+                                                        selected
+                                                    @endif
+                                                @endisset
+                                                >
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endforeach
+                                @error('informer')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">

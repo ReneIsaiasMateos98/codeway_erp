@@ -44,9 +44,12 @@ class MydepartamentComponent extends Component
         /* Obtengo el departamento del usuario logueado */
         $comments = Departament::orderBy('id', 'Asc')->where('id', '=', $this->depa_id)->first();
         /* Asigno los comentarios del departamento */
-        $comentarios = $comments->comments;
+        if (isset($comments->comments)) {
+            $comentarios = $comments->comments;
+            $this->comentarios = $comentarios->sortByDesc('id');
+        }
 
-        $this->comentarios = $comentarios->sortByDesc('id');
+
         /* Obtengo mi usuario con perfil */
         $this->yo = User::with('profile')->where('id', '=', $user->id)->first();
         $this->otros = User::with('profile')->get();

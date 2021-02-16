@@ -22,7 +22,7 @@ class PreuserComponent extends Component
     public $rules = [
         'name'         => 'required|string|max:100',
         'lastname'     => 'required|string|max:100',
-        'phone'        => 'required|numeric|unique:preusers,phone',
+        'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
         'email'        => 'required|email|max:100|unique:preusers,email',
     ];
 
@@ -52,14 +52,14 @@ class PreuserComponent extends Component
             $this->validateOnly($propertyName, [
                 'name'         => 'required|string|max:100',
                 'lastname'     => 'required|string|max:100',
-                'phone'        => 'required|numeric|unique:preusers,phone',
+                'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
                 'email'        => 'required|email|max:100|unique:preusers,email',
             ]);
         } else {
             $this->validateOnly($propertyName, [
                 'name'         => 'required|string|max:100',
                 'lastname'     => 'required|string|max:100',
-                'phone'        => 'required|numeric|unique:preusers,phone,' . $this->preuser_id,
+                'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone,' . $this->preuser_id,
                 'email'        => 'required|email|max:100|unique:preusers,email,' . $this->preuser_id,
             ]);
         }
@@ -72,7 +72,7 @@ class PreuserComponent extends Component
         $this->validate([
             'name'         => 'required|string|max:100',
             'lastname'     => 'required|string|max:100',
-            'phone'        => 'required|numeric|unique:preusers,phone',
+            'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
             'email'        => 'required|email|max:100|unique:preusers,email',
         ]);
 
@@ -180,7 +180,7 @@ class PreuserComponent extends Component
         $this->validate([
             'name'         => 'required|string|max:100',
             'lastname'     => 'required|string|max:100',
-            'phone'        => 'required|numeric|unique:preusers,phone,' . $this->preuser_id,
+            'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone,' . $this->preuser_id,
             'email'        => 'required|email|max:100|unique:preusers,email,' . $this->preuser_id,
         ]);
 
@@ -232,7 +232,7 @@ class PreuserComponent extends Component
             $this->preuser_id   = $preusers->id;
             $this->name         = $preusers->name;
             $this->lastname     = $preusers->lastname;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

@@ -53,13 +53,13 @@
                     <tbody>
                         @foreach($holidays as $holiday)
                             <tr>
-                                <th>
+                                <td>
                                     @isset($holiday->users[0]->id)
                                         {{ $holiday->users[0]->name }}
                                     @else
                                         No hay usuario
                                     @endisset
-                                </th>
+                                </td>
                                 <td>{{ $holiday->days }}</td>
                                 <td>{{ $holiday->beginDate }}</td>
                                 <td>{{ $holiday->endDate }}</td>

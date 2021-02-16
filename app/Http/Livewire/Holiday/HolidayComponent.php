@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Holiday;
 use App\Models\Absence;
 use App\Models\Holiday;
 use App\Models\Period;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -21,14 +22,14 @@ class HolidayComponent extends Component
 
     public $holiday_id, $days, $beginDate, $endDate, $inProcess, $taken, $available, $responsable, $commentable, $status, $created_at, $updated_at, $accion = "store";
 
-    public $ausencia, $periodo, $absence_id, $period_id;
+    public $ausencia, $periodo, $absence_id, $period_id, $usuarios, $user_id, $responsables, $responsa;
 
     public $search = '', $perPage = '10', $page = 1, $total;
 
     public $rules = [
         'days'          => 'required|numeric|max:100',
         'beginDate'     => 'required|date',
-        'endDate'       => 'required|date',
+        'endDate'       => 'required|date|after:beginDate',
         'inProcess'     => 'required|numeric|max:100',
         'taken'         => 'required|numeric|max:100',
         'available'     => 'numeric|max:100',
@@ -37,6 +38,7 @@ class HolidayComponent extends Component
         'status'        => 'required',
         'absence_id'    => 'required',
         'period_id'     => 'required',
+        'user_id'       => 'required',
     ];
 
     protected $queryString = [
@@ -56,12 +58,14 @@ class HolidayComponent extends Component
         'status'        => 'estado',
         'absence_id'    => 'ausecia',
         'period_id'     => 'periodo',
+        'user_id'       => 'usuario',
     ];
 
     public function mount()
     {
         $this->total        = count(Holiday::all());
-        $this->responsable  = Auth::user()->name;
+        $this->responsables  = User::where('status', '=', 1)->get();
+        $this->usuarios     = User::with('profile')->where('status', '=', 1)->get();
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -71,16 +75,11 @@ class HolidayComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'days'          => 'required|numeric|max:100',
                 'beginDate'     => 'required|date',
-                'endDate'       => 'required|date',
-                'inProcess'     => 'required|numeric|max:100',
-                'taken'         => 'required|numeric|max:100',
-                'available'     => 'numeric|max:100',
-                'responsable'   => 'required|string|',
-                'commentable'   => '',
-                'absence_id'    => 'required',
-                'period_id'     => 'required',
+                /* 'endDate'       => 'required|date|after:beginDate', */
+                'responsable'   => 'required|string',
+                'user_id'       => 'required|numeric',
+                'period_id'     => 'required|numeric',
             ]);
         } else {
             $this->validateOnly($propertyName, [
@@ -94,7 +93,7 @@ class HolidayComponent extends Component
                 'commentable'   => '',
                 'status'        => 'required',
                 'absence_id'    => 'required',
-                'period_id'     => 'required',
+                /* 'period_id'     => 'required', */
             ]);
         }
     }
@@ -104,16 +103,10 @@ class HolidayComponent extends Component
         Gate::authorize('haveaccess', 'holiday.create');
 
         $this->validate([
-            'days'          => 'required|numeric|max:100',
             'beginDate'     => 'required|date',
-            'endDate'       => 'required|date',
-            'inProcess'     => 'required|numeric|max:100',
-            'taken'         => 'required|numeric|max:100',
-            'available'     => 'numeric|max:100',
-            'responsable'   => 'required|string|',
-            'commentable'   => '',
-            'absence_id'    => 'required',
-            'period_id'     => 'required',
+            'responsable'   => 'required|string',
+            'user_id'       => 'required|numeric',
+            'period_id'     => 'required|numeric',
         ]);
 
         $status = 'success';
@@ -122,31 +115,32 @@ class HolidayComponent extends Component
         try {
 
             DB::beginTransaction();
+            $fecha = new Carbon($this->beginDate);
+            $fechaFin = $fecha->addYear()->format('Y-m-d');
 
-            $slug = $this->days . ' ' . $this->beginDate . ' ' . $this->endDate;
-            Holiday::create([
-                'slug'         => Str::slug($slug, '-'),
-                'days'         => $this->days,
+            $vacacion = Holiday::create([
+                'days'         => null,
                 'beginDate'    => $this->beginDate,
-                'endDate'      => $this->endDate,
-                'inProcess'    => $this->inProcess,
-                'taken'        => $this->taken,
-                'available'    => $this->available,
-                'responsable'  => Auth::user()->name,
+                'endDate'      => $fechaFin,
+                'inProcess'    => null,
+                'taken'        => null,
+                'available'    => null,
+                'responsable'  => $this->responsable,
                 'commentable'  => $this->commentable,
-                'absence_id'   => $this->absence_id,
+                'status'       => 0,
+                'absence_id'   => null,
                 'period_id'    => $this->period_id,
             ]);
 
-            DB::commit();
+            $vacacion->users()->sync($this->user_id);
 
+            DB::commit();
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             $status = 'error';
             $content = 'Ocurrió un error al agregar la vacación';
-
         }
 
         session()->flash('process_result', [
@@ -172,7 +166,7 @@ class HolidayComponent extends Component
             $this->inProcess      = $holiday->inProcess;
             $this->taken          = $holiday->taken;
             $this->available      = $holiday->available;
-            $this->responsable    = $holiday->responsable;
+            $this->responsa       = $holiday->responsable;
             $this->commentable    = $holiday->commentable;
             $this->status         = $holiday->status;
             $this->absence_id     = $holiday->absence_id;
@@ -192,6 +186,11 @@ class HolidayComponent extends Component
                 $this->periodo     = "Sin periodo";
             }
 
+            if (isset($holiday->users[0]->name)) {
+                $this->user_id     = $holiday->users[0]->id;
+            } else {
+                $this->user_id     = "Sin usuario";
+            }
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -201,7 +200,6 @@ class HolidayComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -233,6 +231,11 @@ class HolidayComponent extends Component
             $this->updated_at     = $holiday->updated_at;
             $this->accion         = "update";
 
+            if (isset($holiday->users[0]->name)) {
+                $this->user_id     = $holiday->users[0]->id;
+            } else {
+                $this->user_id     = "Sin usuario";
+            }
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -242,7 +245,6 @@ class HolidayComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -251,17 +253,17 @@ class HolidayComponent extends Component
         Gate::authorize('haveaccess', 'holiday.edit');
 
         $this->validate([
-            'days'          => 'required|numeric|max:100',
+            /* 'days'          => 'required|numeric|max:100', */
             'beginDate'     => 'required|date',
             'endDate'       => 'required|date',
-            'inProcess'     => 'required|numeric|max:100',
-            'taken'         => 'required|numeric|max:100',
-            'available'     => 'numeric|max:100',
+            /* 'inProcess'     => 'required|numeric|max:100', */
+            /* 'taken'         => 'required|numeric|max:100', */
+            /* 'available'     => 'numeric|max:100', */
             'responsable'   => 'required|string|',
-            'commentable'   => '',
+            /* 'commentable'   => '', */
             'status'        => 'required',
-            'absence_id'    => 'required',
-            'period_id'     => 'required',
+            /* 'absence_id'    => 'required', */
+            /* 'period_id'     => 'required', */
         ]);
 
         $status = 'success';
@@ -273,33 +275,31 @@ class HolidayComponent extends Component
 
             if ($this->holiday_id) {
                 $holiday = Holiday::find($this->holiday_id);
-                $slug = $this->days . ' ' . $this->beginDate . ' ' . $this->endDate;
 
                 $holiday->update([
-                    'slug'         => Str::slug($slug, '-'),
                     'days'         => $this->days,
                     'beginDate'    => $this->beginDate,
                     'endDate'      => $this->endDate,
-                    'inProcess'    => $this->inProcess,
-                    'taken'        => $this->taken,
+                    'inProcess'    => null,
+                    'taken'        => $this->inProcess + $this->taken,
                     'available'    => $this->available,
-                    'responsable'  => Auth::user()->name,
+                    'responsable'  => $this->responsable,
                     'commentable'  => $this->commentable,
                     'status'       => $this->status,
                     'absence_id'   => $this->absence_id,
                     'period_id'    => $this->period_id,
                 ]);
+
+                $holiday->users()->attach($this->user_id);
             }
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             $status = 'error';
             $content = 'Ocurrió un error al actualizar la vacación';
-
         }
 
         session()->flash('process_result', [
@@ -325,7 +325,6 @@ class HolidayComponent extends Component
             $this->inProcess      = $holiday->inProcess;
             $this->taken          = $holiday->taken;
             $this->available      = $holiday->available;
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -335,7 +334,6 @@ class HolidayComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -353,14 +351,12 @@ class HolidayComponent extends Component
             Holiday::find($this->holiday_id)->delete();
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             $status = 'error';
             $content = 'Ocurrió un error al eliminar la vacación';
-
         }
         session()->flash('process_result', [
             'status'    => $status,
@@ -391,6 +387,10 @@ class HolidayComponent extends Component
             'accion',
             'ausencia',
             'periodo',
+            'responsables',
+            'user_id',
+            'responsa',
+
         ]);
 
         $this->mount();
