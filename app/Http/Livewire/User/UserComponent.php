@@ -167,11 +167,11 @@ class UserComponent extends Component
             if ($period_id) {
                 $beginDate = $fecha->format('Y-m-d');
                 /* $endDate = $fecha->addYear()->format('Y-m-d'); */
-                $endDate = $fecha->subMonth()->addYear()->format('Y-m-d');
+                $endDate = $fecha->addYear()->format('Y-m-d');
 
                 $vacation = Holiday::create([
                     'slug'         => null,
-                    'days'         => null,
+                    'days'         => 6,
                     'beginDate'    => $beginDate,
                     'endDate'      => $endDate,
                     'inProcess'    => null,

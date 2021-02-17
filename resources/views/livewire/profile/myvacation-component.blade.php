@@ -87,7 +87,7 @@
                     @enderror
                 </div>
                 <div class="col-3">
-                    <label class="text-muted" for="inicio">Fecha de incio</label>
+                    <label class="text-muted" for="inicio">Fecha de inicio</label>
                     <input type="date" name="inicio" class="form-control @error('inicio') is-invalid @enderror"
                             wire:model="inicio" wire:dirty.class="bg-primary">
                     @error('inicio')
@@ -140,14 +140,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="text-muted" for="estado">Estado:</label>
-            @if ($status == "1")
-                <h5>Activo</h5>
-            @else
-                <h5>Inactivo</h5>
-            @endif
-        </div>
         <div class="card-footer">
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-secondary mx-2" wire:click.prevent="clean()">Cancelar</button>
@@ -174,7 +166,7 @@
                     </thead>
                     <tbody>
                         @foreach($vacaciones as $vacacion)
-                            @isset($vacacion->users[0])
+                            @isset($vacacion->users[0]->id)
                                 @if ($vacacion->users[0]->id == Auth::user()->id)
                                     <tr>
                                         <td>

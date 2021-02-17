@@ -19,14 +19,10 @@ class MyvacationComponent extends Component
     /* Datos para los modelos necesarios para este mòdulo */
     public $vacation, $periodo, $ausencia, $absences, $usuario, $usuarios, $vacaciones;
     /* Datos que el usuario vera para ver si la toma o no */
-    public $inicio, $fin, $dias;
-
-    public $ausencia_id;
+    public $inicio, $fin, $dias, $ausencia_id;
 
     public $anioHoy, $aniInicio, $anioTermino, $mesHoy, $mesInicio, $mesTermino, $diaHoy, $diaInicio, $diaTermino;
 
-
-    public $currentDate, $shippingDate, $diferencia_en_dias, $diferencia_en_meses;
 
     public $rules = [
         'days'          => 'required|numeric',
@@ -80,12 +76,17 @@ class MyvacationComponent extends Component
                     $endDate            = new Carbon($vacacion->endDate);
                     $this->beginDate    = $beginDate->format('l jS \\of F Y');
                     $this->endDate      = $endDate->format('l jS \\of F Y');
+
+                    $this->calculaNuevoRegistro($vacacion->beginDate, $vacacion->endDate);
+
                     $this->vacan_id     = $vacacion->id;
                     $this->responsable  = $vacacion->responsable;
                     $this->status       = $vacacion->status;
                     $this->period_id    = $vacacion->period_id;
                     $this->inProcess    = $vacacion->inProcess;
                     $this->taken        = $vacacion->taken;
+                    $this->days         = $vacacion->days;
+                    $this->available    = $vacacion->available;
                     if ($vacacion->status == 1) {
                         //preceso de validación
                         $this->days         = $vacacion->days;
@@ -101,6 +102,18 @@ class MyvacationComponent extends Component
                     } else {
                         //Es nuevo o ya se acpeto la validacion
                         $this->obtieneDias($vacacion->beginDate);
+                    }
+                    if (!(isset($this->days))) {
+                        $this->days = 0;
+                    }
+                    if (!(isset($this->inProcess))) {
+                        $this->inProcess = 0;
+                    }
+                    if (!(isset($this->taken))) {
+                        $this->taken = 0;
+                    }
+                    if (!(isset($this->available))) {
+                        $this->available = 0;
                     }
                 }
             }
@@ -133,15 +146,16 @@ class MyvacationComponent extends Component
 
         $dias = $meses - $tomadas;
 
-        $this->days = round($dias, 0, PHP_ROUND_HALF_DOWN);
+        /* $this->days = round($dias, 0, PHP_ROUND_HALF_DOWN); */
+        $days = round($dias, 0, PHP_ROUND_HALF_DOWN);
 
         $diasRestantes = $diferencia_en_dias / 365;
 
-        $disponibles = $this->days + $diasRestantes;
+        $disponibles = $days + $diasRestantes;
 
         $available = $disponibles - $tomadas;
 
-        $this->available = round($available, 2);
+        $this->available = round($available, 3);
     }
 
     public function obtieneDias($fechaInicio)
@@ -157,32 +171,21 @@ class MyvacationComponent extends Component
 
         $meses = $diferencia_en_meses / 2;
 
-        $this->days = round($meses, 0, PHP_ROUND_HALF_DOWN);
+        /* $this->days = round($meses, 0, PHP_ROUND_HALF_DOWN); */
+        $days = round($meses, 0, PHP_ROUND_HALF_DOWN);
 
         $diasRestantes = $diferencia_en_dias / 365;
 
-        $disponibles = $this->days + $diasRestantes;
+        $disponibles = $days + $diasRestantes;
 
         $this->available = round($disponibles, 2);
     }
 
-    public function calculaDias($fechaInicio, $fechaTermino)
+    public function calculaNuevoRegistro($fechaInicio, $fechaTermino)
     {
         $fechaHoy    = Carbon::now();
         $fechaBegin  = new Carbon($fechaInicio);
         $fechaEnd    = new Carbon($fechaTermino);
-
-        $this->anioHoy     = $fechaHoy->format('Y');
-        $this->aniInicio   = $fechaBegin->format('Y');
-        $this->anioTermino = $fechaEnd->format('Y');
-
-        $this->mesHoy      = $fechaHoy->format('m');
-        $this->mesInicio   = $fechaBegin->format('m');
-        $this->mesTermino  = $fechaEnd->format('m');
-
-        $this->diaHoy      = $fechaHoy->format('d');
-        $this->diaInicio   = $fechaBegin->format('d');
-        $this->diaTermino  = $fechaEnd->format('d');
 
         $anioHoy     = $fechaHoy->format('Y');
         $aniInicio   = $fechaBegin->format('Y');
@@ -197,119 +200,45 @@ class MyvacationComponent extends Component
         $diaTermino  = $fechaEnd->format('d');
 
 
-
-        /* Revisar esta pagina
-        https://desarrolloweb.com/faq/diferencia-de-dias
-        o esta
-        https://desarrolloweb.com/articulos/calcular-dias-entre-dos-fechas-php.html
-
-
-        $currentDate = Carbon::createFromFormat('Y-m-d', $fechaActual);
-
-        $shippingDate = Carbon::createFromFormat('Y-m-d', $fechaEnvio);
-
-        $diferencia_en_dias = $currentDate->diffInDays($shippingDate);
-
-
-        codigo completo
-
-        //defino fecha 1
-        $ano1 = 2006;
-        $mes1 = 10;
-        $dia1 = 2;
-
-        //defino fecha 2
-        $ano2 = 2006;
-        $mes2 = 10;
-        $dia2 = 27;
-
-        //calculo timestam de las dos fechas
-        $timestamp1 = mktime(0,0,0,$mes1,$dia1,$ano1);
-        $timestamp2 = mktime(4,12,0,$mes2,$dia2,$ano2);
-
-        //resto a una fecha la otra
-        $segundos_diferencia = $timestamp1 - $timestamp2;
-        //echo $segundos_diferencia;
-
-        //convierto segundos en días
-        $dias_diferencia = $segundos_diferencia / (60 * 60 * 24);
-
-        //obtengo el valor absoulto de los días (quito el posible signo negativo)
-        $dias_diferencia = abs($dias_diferencia);
-
-        //quito los decimales a los días de diferencia
-        $dias_diferencia = floor($dias_diferencia);
-
-        echo $dias_diferencia;
-        */
-
         //Si el año actual es igual al año de inicio
-        if ($anioHoy == $aniInicio) {
-            //Obtengo los meses de hoy y de inicio
-            $mesHoy     = 12 - $mesHoy;
-            $mesInicio  = 12 - $mesInicio;
-            //resto los meses de hoy menos el mes de inicio y tengo el total de meses que lleva
-            $meses      = $mesInicio - $mesHoy;
-            //divido entre dos para saber cuantos dias le corresponden
-            $dias   = $meses / 2;
-            //redondeo al numero mas bajo y asigno eso a la variable $dias
-            $this->days = round($dias, 0, PHP_ROUND_HALF_DOWN);
-            $this->available = round($dias, 1);
-
-            //En caso de que el año actual sea igual al año de termino
-        } else if ($anioHoy == $anioTermino) {
+        if ($anioHoy == $anioTermino) {
             // Y que el mes de hoy sea mayo o igual al mes de termino
             if ($mesHoy >= $mesTermino) {
                 // Y que el dia de hoy se mayor o igual al dia de termino
                 if ($diaHoy >= $diaTermino) {
                     //se crea un nuevo registro con los datos del usuario y vacaciones, se suma un año a sus vacaciones
                     $fecha  = Carbon::now();
-                    $anio = $fecha->format('Y');
-                    $period_id = Period::where('description', '=', $anio)->first();
+                    /* $anio = $fecha->format('Y');
+                    $period_id = Period::where('description', '=', $anio)->first(); */
+
+                    $periodo = $fecha->format('Y');
+                    $period_id = Period::where('description', '=', $periodo)->first();
 
                     if ($period_id) {
-                        $beginDate = $fecha->format('Y-m-d');
-                        $endDate = $fecha->addYear()->format('Y-m-d');
+
+                        $vacacion = Holiday::where('id', '=', $this->vacan_id)->first();
+                        $dias = $vacacion->days;
+
+                        $fecha1 = $fechaBegin->addYear();
+                        $fecha2 = $fechaEnd->addYear();
 
                         $vacation = Holiday::create([
-                            'slug'         => null,
-                            'days'         => null,
-                            'beginDate'    => $beginDate,
-                            'endDate'      => $endDate,
+                            'days'         => $dias + 1,
+                            'beginDate'    => $fecha1,
+                            'endDate'      => $fecha2,
                             'inProcess'    => null,
                             'taken'        => null,
                             'available'    => null,
-                            'responsable'  => null,
+                            'responsable'  => $this->responsable,
                             'commentable'  => null,
+                            'status'       => 0,
                             'absence_id'   => null,
                             'period_id'    => $period_id->id,
                         ]);
 
-                        $this->usuario->holidays()->sync($vacation->id);
+                        $this->usuario->holidays()->attach($vacation->id);
                     }
-                } else {
-                    //Se calculan los dias que faltan para que termine su primer año
-                    //Por lo que rstamos los meses de hoy e incio a 12 para saber cuantos meses va
-                    $mesInicio     = 12 - $mesInicio;
-                    //resto el mes de incio menos el mes de hoy para saber cuantos meses va
-                    $meses  = $mesInicio + $mesHoy;
-                    //divido los meses entre 2 para saber cuantos dias le corresponden
-                    $dias   = $meses / 2;
-                    //redondeo al numero mas bajo y asigno eso a la variable $dias
-                    $this->days = round($dias, 0, PHP_ROUND_HALF_DOWN);
-                    $this->available = round($dias, 1);
                 }
-                // En caso de que no, quiere decir que el mes de inicio es mayor que el mes de hoy
-            } else {
-                //Por lo que rstamos los meses de hoy e incio a 12 para saber cuantos meses va
-                $mesInicio  = 12 - $mesInicio;
-                //resto el mes de incio menos el mes de hoy para saber cuantos meses va
-                $meses  = $mesInicio + $mesHoy;
-                //divido los meses entre 2 para saber cuantos dias le corresponden
-                $dias   = $meses / 2;
-                //redondeo al numero mas bajo y asigno eso a la variable $dias
-                $this->days = round($dias, 0, PHP_ROUND_HALF_DOWN);
-                $this->available = round($dias, 1);
             }
         }
     }
@@ -334,7 +263,7 @@ class MyvacationComponent extends Component
             $diaTermino = $fechaTermino->format('d');
 
             $this->dias = ($diaTermino - $diaInicio) + 1;
-            $days = $this->days;
+            $days = $this->available;
 
             $this->validate([
                 'inicio'       => 'required|date|after:today',
@@ -352,7 +281,7 @@ class MyvacationComponent extends Component
         $diaTermino = $fechaTermino->format('d');
 
         $this->dias = ($diaTermino - $diaInicio) + 1;
-        $days = $this->days;
+        $days = $this->available;
 
         $this->validate([
             'inicio'       => 'required|date|after:today',
@@ -360,7 +289,7 @@ class MyvacationComponent extends Component
             /* 'dias'         => 'required|numeric|min:diaInicio|max:days', */
             'ausencia_id'  => 'required',
         ]);
-        if ($this->dias > $this->days) {
+        if ($this->dias > $this->available) {
             $status = 'error';
             $content = 'Los dias que has solicitado no pueden ser mayor a los dias de los que dispones';
             session()->flash('process_result', [
@@ -383,12 +312,11 @@ class MyvacationComponent extends Component
 
             if ($this->vacan_id) {
                 $holiday = Holiday::find($this->vacan_id);
-                $slug = $this->days . ' ' . $this->beginDate . ' ' . $this->endDate;
 
                 $holiday->update([
                     'days'         => $this->days - $this->dias,
                     'inProcess'    => $this->dias,
-                    'available'    => $this->available,
+                    'available'    => $this->available - $this->dias,
                     'responsable'  => $this->responsable,
                     'commentable'  => $this->commentable,
                     'status'       => 1,

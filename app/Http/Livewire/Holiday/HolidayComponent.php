@@ -290,7 +290,7 @@ class HolidayComponent extends Component
                     'period_id'    => $this->period_id,
                 ]);
 
-                $holiday->users()->attach($this->user_id);
+                $holiday->users()->sync($this->user_id);
             }
 
             DB::commit();
