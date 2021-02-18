@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class MyvacationComponent extends Component
 {
     /* Datos para la tabla de vacaiones */
-    public $vacan_id, $days, $beginDate, $endDate, $inProcess, $taken, $available, $responsable, $commentable, $status, $absence_id, $period_id, $usuario_id;
+    public $vacan_id, $days, $beginDate, $endDate, $inProcess, $taken, $available, $responsable, $commentable, $status, $absence_id, $period_id, $usuario_id, $created_at;
     /* Datos para los modelos necesarios para este mòdulo */
     public $vacation, $periodo, $ausencia, $absences, $usuario, $usuarios, $vacaciones;
     /* Datos que el usuario vera para ver si la toma o no */
@@ -36,6 +36,7 @@ class MyvacationComponent extends Component
         'status'        => 'required',
         'absence_id'    => 'required',
         'period_id'     => 'required',
+        'created_at'    => 'required',
     ];
 
     protected $validationAttributes = [
@@ -50,9 +51,9 @@ class MyvacationComponent extends Component
         'status'        => 'estado',
         'absence_id'    => 'ausecia',
         'period_id'     => 'periodo',
-        'inicio'     => 'fecha de inicio',
-        'fin'     => 'fecha de termino',
-
+        'inicio'        => 'fecha de inicio',
+        'fin'           => 'fecha de termino',
+        'created_at'    => 'fecha de inicio de vacación',
     ];
 
     public function mount()
@@ -72,25 +73,24 @@ class MyvacationComponent extends Component
         foreach ($vacaciones as $vacacion) {
             if (isset($vacacion->users[0])) {
                 if (($vacacion->users[0]->id  == $user->id)) {
-                    $beginDate          = new Carbon($vacacion->beginDate);
+                    $beginDate          = new Carbon($vacacion->created_at);
                     $endDate            = new Carbon($vacacion->endDate);
                     $this->beginDate    = $beginDate->format('l jS \\of F Y');
                     $this->endDate      = $endDate->format('l jS \\of F Y');
-
-                    $this->calculaNuevoRegistro($vacacion->beginDate, $vacacion->endDate);
-
                     $this->vacan_id     = $vacacion->id;
                     $this->responsable  = $vacacion->responsable;
                     $this->status       = $vacacion->status;
                     $this->period_id    = $vacacion->period_id;
-                    $this->inProcess    = $vacacion->inProcess;
+                    /* $this->inProcess    = $vacacion->inProcess; */
                     $this->taken        = $vacacion->taken;
                     $this->days         = $vacacion->days;
                     $this->available    = $vacacion->available;
+                    $this->created_at   = $vacacion->beginDate;
+                    $this->calculaNuevoRegistro($vacacion->created_at, $vacacion->endDate);
                     if ($vacacion->status == 1) {
                         //preceso de validación
                         $this->days         = $vacacion->days;
-                        $this->inProcess    = $vacacion->inProcess;
+                        /* $this->inProcess    = $vacacion->inProcess; */
                         $this->taken        = $vacacion->taken;
                         $this->available    = $vacacion->available;
                         $this->commentable  = $vacacion->commentable;
@@ -98,10 +98,11 @@ class MyvacationComponent extends Component
                         $this->usuario_id   = $vacacion->users[0]->id;
                     } else if ($vacacion->status == 2) {
                         //Ya se acepto la validación
-                        $this->obtieneDiasConTaken($vacacion->beginDate, $vacacion->taken);
+                        $this->obtieneDiasConTaken($vacacion->created_at, $vacacion->taken, $vacacion->beginDate, $vacacion->inProcess);
+                        $this->inProcess    = $vacacion->inProcess;
                     } else {
                         //Es nuevo o ya se acpeto la validacion
-                        $this->obtieneDias($vacacion->beginDate);
+                        $this->obtieneDias($vacacion->created_at);
                     }
                     if (!(isset($this->days))) {
                         $this->days = 0;
@@ -131,10 +132,37 @@ class MyvacationComponent extends Component
         }
     }
 
-    public function obtieneDiasConTaken($fechaInicio, $tomadas)
+    public function obtieneDiasConTaken($fechaInicio, $tomadas, $fechaVacacion, $inProcess)
     {
         $fechaHoy    = Carbon::now();
         $fechaBegin  = new Carbon($fechaInicio);
+        $fechaVacacion  = new Carbon($fechaVacacion);
+
+        $anioHoy     = $fechaHoy->format('Y');
+        $anioInicio  = $fechaVacacion->format('Y');
+
+        $mesHoy      = $fechaHoy->format('m');
+        $mesInicio   = $fechaVacacion->format('m');
+
+        $diaHoy      = $fechaHoy->format('d');
+        $diaInicio   = $fechaVacacion->format('d');
+
+        if ($anioHoy == $anioInicio) {
+            if ($mesHoy >= $mesInicio) {
+                if ($diaHoy >= $diaInicio) {
+                    $vacation = Holiday::where('id', '=', $this->vacan_id)->first();
+                    if (isset($inProcess)) {
+                        $vacation->update([
+                            'days'          => $this->days - $inProcess,
+                            'inProcess'     => null,
+                            'taken'         => $inProcess + $this->taken,
+                            'available'     => $this->available - $inProcess,
+                            'status'        => 0,
+                        ]);
+                    }
+                }
+            }
+        }
 
         $fechaHoy = $fechaHoy->format('Y-m-d');
 
@@ -151,11 +179,11 @@ class MyvacationComponent extends Component
 
         $diasRestantes = $diferencia_en_dias / 365;
 
-        $disponibles = $days + $diasRestantes;
+        $disponibles = $meses + $diasRestantes;
 
         $available = $disponibles - $tomadas;
 
-        $this->available = round($available, 3);
+        /* $this->available = round($available, 2); */
     }
 
     public function obtieneDias($fechaInicio)
@@ -176,7 +204,7 @@ class MyvacationComponent extends Component
 
         $diasRestantes = $diferencia_en_dias / 365;
 
-        $disponibles = $days + $diasRestantes;
+        $disponibles = $days + $diasRestantes - $this->taken;
 
         $this->available = round($disponibles, 2);
     }
@@ -199,7 +227,6 @@ class MyvacationComponent extends Component
         $diaInicio   = $fechaBegin->format('d');
         $diaTermino  = $fechaEnd->format('d');
 
-
         //Si el año actual es igual al año de inicio
         if ($anioHoy == $anioTermino) {
             // Y que el mes de hoy sea mayo o igual al mes de termino
@@ -213,18 +240,19 @@ class MyvacationComponent extends Component
 
                     $periodo = $fecha->format('Y');
                     $period_id = Period::where('description', '=', $periodo)->first();
-
                     if ($period_id) {
 
                         $vacacion = Holiday::where('id', '=', $this->vacan_id)->first();
                         $dias = $vacacion->days;
+                        $fechaBegin = new Carbon($vacacion->created_at);
+                        $fechaEnd = new Carbon($vacacion->endDate);
 
                         $fecha1 = $fechaBegin->addYear();
                         $fecha2 = $fechaEnd->addYear();
 
                         $vacation = Holiday::create([
-                            'days'         => $dias + 1,
-                            'beginDate'    => $fecha1,
+                            'days'         => $dias + 7,
+                            'beginDate'    => null,
                             'endDate'      => $fecha2,
                             'inProcess'    => null,
                             'taken'        => null,
@@ -234,6 +262,7 @@ class MyvacationComponent extends Component
                             'status'       => 0,
                             'absence_id'   => null,
                             'period_id'    => $period_id->id,
+                            'created_at'   => $fecha1,
                         ]);
 
                         $this->usuario->holidays()->attach($vacation->id);
@@ -257,12 +286,13 @@ class MyvacationComponent extends Component
         }
 
         if (isset($this->inicio) && isset($this->fin)) {
+
             $fechaInicio    = new Carbon($this->inicio);
             $fechaTermino    = new Carbon($this->fin);
-            $diaInicio = $fechaInicio->format('d');
-            $diaTermino = $fechaTermino->format('d');
 
-            $this->dias = ($diaTermino - $diaInicio) + 1;
+            $diferencia_en_dias = $fechaInicio->diffInDays($fechaTermino);
+
+            $this->dias = $diferencia_en_dias + 1;
             $days = $this->available;
 
             $this->validate([
@@ -277,10 +307,11 @@ class MyvacationComponent extends Component
     {
         $fechaInicio    = new Carbon($this->inicio);
         $fechaTermino    = new Carbon($this->fin);
-        $diaInicio = $fechaInicio->format('d');
-        $diaTermino = $fechaTermino->format('d');
 
-        $this->dias = ($diaTermino - $diaInicio) + 1;
+        $diferencia_en_dias = $fechaInicio->diffInDays($fechaTermino);
+
+        $this->dias = $diferencia_en_dias + 1;
+
         $days = $this->available;
 
         $this->validate([
@@ -314,9 +345,10 @@ class MyvacationComponent extends Component
                 $holiday = Holiday::find($this->vacan_id);
 
                 $holiday->update([
-                    'days'         => $this->days - $this->dias,
+                    'days'         => $this->days,
+                    'beginDate'    => $this->inicio,
                     'inProcess'    => $this->dias,
-                    'available'    => $this->available - $this->dias,
+                    'available'    => $this->available,
                     'responsable'  => $this->responsable,
                     'commentable'  => $this->commentable,
                     'status'       => 1,
@@ -364,9 +396,15 @@ class MyvacationComponent extends Component
             'ausencia',
             'absences',
             'usuario',
+            'dias',
+            'inicio',
+            'fin',
+            'ausencia_id'
         ]);
 
         $this->mount();
+        $this->resetErrorBag();
+        $this->resetValidation();
     }
 
     public function render()

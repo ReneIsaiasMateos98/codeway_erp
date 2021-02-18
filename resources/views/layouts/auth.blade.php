@@ -15,18 +15,6 @@
         <main role="main">
             @yield('content')
         </main>
-        <a href="{{ url('/') }}">Back to {{ config('app.name', 'Codeway') }}</a>
-        <ul class="list-inline">
-            <li class="list-inline-item">
-                <a href="{{ route('login') }}">Login</a>
-            </li>
-            <li class="list-inline-item">
-                <a href="{{ route('register') }}">Register</a>
-            </li>
-            <li class="list-inline-item">
-                <a href="{{ route('password.email') }}">Forgot Password</a>
-            </li>
-        </ul>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.0.5/js/adminlte.min.js"></script>

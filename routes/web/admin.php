@@ -37,6 +37,7 @@ use App\Http\Controllers\VacantController;
 */
 
 Route::middleware(['auth'])->group(function () {
+
     Route::resource('absence', AbsenceController::class)->names('absence');
 
     Route::resource('category', CategoryController::class)->names('category');
@@ -74,4 +75,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class)->names('user');
 
     Route::resource('vacant', VacantController::class)->names('vacant');
+    
 });

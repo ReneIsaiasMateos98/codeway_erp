@@ -142,8 +142,13 @@
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-end">
-                <button type="button" class="btn btn-secondary mx-2" wire:click.prevent="clean()">Cancelar</button>
-                <button type="button" class="btn btn-primary" wire:click.prevent="validaDias()">Enviar solicitud</button>
+                @if ($status != 1 && $status != 2 )
+                    <button type="button" class="btn btn-secondary mx-2" wire:click.prevent="clean()">Cancelar</button>
+                    <button type="button" class="btn btn-primary" wire:click.prevent="validaDias()">Enviar solicitud</button>
+                @else
+                    <button type="button" class="btn btn-secondary mx-2" disabled>Cancelar</button>
+                    <button type="button" class="btn btn-primary"  disabled>Enviar solicitud</button>
+                @endif
             </div>
         </div>
     </div>
@@ -156,9 +161,10 @@
                 <table id="vacation" class="table table-white table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">Ausencia</th>
+                            <th scope="col">Tipo de ausencia</th>
                             <th scope="col">Inicio</th>
-                            <th scope="col">Termino</th>
+                            <th scope="col">En proceso</th>
+                            <th scope="col">Dias</th>
                             <th scope="col">Responsable</th>
                             <th scope="col">Comentario</th>
                             <th scope="col">Perido</th>
@@ -174,8 +180,13 @@
                                                 {{ $vacacion->absence->description }}
                                             @endisset
                                         </td>
-                                        <td>{{ $vacacion->beginDate }}</td>
-                                        <td>{{ $vacacion->endDate }}</td>
+                                        <td>
+                                            @isset($vacacion->beginDate)
+                                                {{ $vacacion->beginDate }}
+                                            @endisset
+                                        </td>
+                                        <td>{{ $vacacion->inProcess }}</td>
+                                        <td>{{ $vacacion->taken }}</td>
                                         <td>{{ $vacacion->responsable }}</td>
                                         <td>{{ $vacacion->commentario }}</td>
                                         <td>

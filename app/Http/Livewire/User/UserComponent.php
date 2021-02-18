@@ -165,14 +165,11 @@ class UserComponent extends Component
             $period_id = Period::where('description', '=', $anio)->first();
 
             if ($period_id) {
-                $beginDate = $fecha->format('Y-m-d');
-                /* $endDate = $fecha->addYear()->format('Y-m-d'); */
                 $endDate = $fecha->addYear()->format('Y-m-d');
 
                 $vacation = Holiday::create([
-                    'slug'         => null,
                     'days'         => 6,
-                    'beginDate'    => $beginDate,
+                    'beginDate'    => null,
                     'endDate'      => $endDate,
                     'inProcess'    => null,
                     'taken'        => null,

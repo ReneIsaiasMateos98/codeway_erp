@@ -53,6 +53,9 @@
                 </div>
             </form>
         </div>
+        <div class="card-footer text-center">
+            <a href="{{ route('password.email') }}">¿No recuerdo mi contraseña?</a>
+        </div>
     </div>
 </div>
 @endsection

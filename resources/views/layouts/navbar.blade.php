@@ -7,10 +7,15 @@
         </li>
     </ul>
     <ul class="navbar-nav ml-auto">
+        {{-- <img src="{{ asset('storage/users/user.png') }}"  class="rounded-circle" alt="{{ Auth::user()->adminlte_image() }}"> --}}
+        {{-- <img src="{{ asset('storage/users/' . Auth::user()->adminlte_image() ) }}"  class="rounded-circle" alt="{{ Auth::user()->adminlte_image() }}"> --}}
         <li class="nav-item dropdown">
+
             <a id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
-                <span class="caret"></span>
+                {{-- <span class="caret"> --}}
+
+                {{-- </span> --}}
             </a>
             <div class="dropdown-menu dropdown-menu-right"  aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('profile') }}">Mi Perfil</a>

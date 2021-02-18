@@ -6,7 +6,7 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="/"><strong>@yield('title')</strong></a>
+        <a href="/"><strong>Recuperación de contraseña</strong></a>
     </div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -19,7 +19,7 @@
 
                 <label class="text-muted" for="description">Correo electronico :</label>
                 <div class="input-group mb-3">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="Email" required="required">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" placeholder="Correo electronico" required="required">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -35,8 +35,11 @@
                 <div class="d-none">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+                <button type="submit" class="btn btn-primary btn-block">Recuperar contraseña</button>
             </form>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{{ route('login') }}">Acceder</a>
         </div>
     </div>
 </div>
