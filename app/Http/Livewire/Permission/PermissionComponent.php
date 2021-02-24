@@ -54,7 +54,7 @@ class PermissionComponent extends Component
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'name'         => 'required|string|max:100|unique:permissions,name,' . $this->permission_id,
+                'name'         => 'required|alpha|max:100|unique:permissions,name,' . $this->permission_id,
                 'slug'         => 'required|string|max:100|unique:permissions,slug,' . $this->permission_id,
                 'description'  => 'required|string',
             ]);
@@ -169,7 +169,7 @@ class PermissionComponent extends Component
         Gate::authorize('haveaccess', 'permission.edit');
 
         $this->validate([
-            'name'         => 'required|string|max:100|unique:permissions,name,' . $this->permission_id,
+            'name'         => 'required|alpha|max:100|unique:permissions,name,' . $this->permission_id,
             'slug'         => 'required|string|max:100|unique:permissions,slug,' . $this->permission_id,
             'description'  => 'required|string',
         ]);

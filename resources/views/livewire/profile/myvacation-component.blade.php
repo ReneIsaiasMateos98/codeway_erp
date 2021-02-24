@@ -108,7 +108,8 @@
                 </div>
                 <div class="col-3">
                     <label class="text-muted" for="responsable">Responsable</label>
-                    <input type="text" name="responsable" class="text-uppercase" value="{{$responsable}}" disabled>
+                    <p>{{ $responsable }}</p>
+                    {{-- <input type="text" name="responsable" class="text-uppercase" value="{{$responsable}}" disabled> --}}
                 </div>
             </div>
             <div class="row">

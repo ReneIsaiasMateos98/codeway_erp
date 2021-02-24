@@ -36,7 +36,7 @@
                                     <option value="">--Seleccione el responsable--</option>
                                     @foreach($usuarios as $usuario)
                                         <option value="{{$usuario->name}}">
-                                            {{ $usuario->name }}
+                                            {{ $usuario->nameUser }} {{ $usuario->firstLastname }} {{ $usuario->secondLastname }}
                                         </option>
                                     @endforeach
                                 </select>

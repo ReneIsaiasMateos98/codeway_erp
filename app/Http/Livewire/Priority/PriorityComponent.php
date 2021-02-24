@@ -21,7 +21,7 @@ class PriorityComponent extends Component
     public $search = '', $perPage = '10', $page = 1, $total, $task, $priority;
 
     public $rules = [
-        'description'  => 'required|string|max:200|unique:priorities,description',
+        'description'  => 'required|alpha|max:200|unique:priorities,description',
     ];
 
     protected $queryString = [
@@ -45,11 +45,11 @@ class PriorityComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:priorities,description',
+                'description' => 'required|alpha|max:200|unique:priorities,description',
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:priorities,description,' . $this->priority_id,
+                'description' => 'required|alpha|max:200|unique:priorities,description,' . $this->priority_id,
             ]);
         }
     }
@@ -59,7 +59,7 @@ class PriorityComponent extends Component
         Gate::authorize('haveaccess', 'priority.create');
 
         $this->validate([
-            'description' => 'required|max:200|unique:priorities,description',
+            'description' => 'required|alpha|max:200|unique:priorities,description',
         ]);
 
         $status  = 'success';
@@ -156,7 +156,7 @@ class PriorityComponent extends Component
         Gate::authorize('haveaccess', 'priority.edit');
 
         $this->validate([
-            'description' => 'required|max:200|unique:priorities,description,' . $this->priority_id,
+            'description' => 'required|alpha|max:200|unique:priorities,description,' . $this->priority_id,
         ]);
 
         $status  = 'success';
@@ -202,7 +202,7 @@ class PriorityComponent extends Component
 
             $this->priority_id  = $priority->id;
             $this->description  = $priority->description;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

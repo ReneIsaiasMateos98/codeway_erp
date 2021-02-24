@@ -3,7 +3,7 @@
         <div class="card-header bg-secondary">
             <div class="row">
                 <div class="col-8">
-                    <h4 class="text-uppercase">Lista de Eventos</h4>
+                    <h4 class="text-uppercase">Lista de Eventos Generales</h4>
                 </div>
                 <div class="col-4">
                     @can('haveaccess', 'event.create')

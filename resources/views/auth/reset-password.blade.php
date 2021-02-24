@@ -5,7 +5,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="/"><strong>@yield('title')</strong></a>
+        <a href="/"><strong>Cambiar contraseña</strong></a>
     </div>
     @if (session('status'))
         <div class="alert alert-success" role="alert">
@@ -22,14 +22,12 @@
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
+                     @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-
                 <div class="input-group mb-3">
                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="New Password" required="required">
                     <div class="input-group-append">
@@ -37,12 +35,12 @@
                             <span class="fas fa-lock"></span>
                         </div>
                     </div>
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
                 <div class="input-group mb-3">
                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password" placeholder="Confirm New Password" required="required">
                     <div class="input-group-append">
@@ -55,7 +53,7 @@
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+                <button type="submit" class="btn btn-primary btn-block">Cambiar Contraseña</button>
             </form>
         </div>
     </div>

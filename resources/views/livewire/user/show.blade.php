@@ -24,11 +24,11 @@
                                 <h5>{{ $name }}</h5>
                             </div>
                             <div class="form-group">
-                                <label class="text-muted" for="email">Email:</label>
+                                <label class="text-muted" for="email">Email Corporativo:</label>
                                 <h5>{{ $email }}</h5>
                             </div>
                             <div class="form-group">
-                                <label class="text-muted" for="email">Email Corporativo:</label>
+                                <label class="text-muted" for="email">Email:</label>
                                 <h5>{{ $corporative }}</h5>
                             </div>
                             <div class="form-group">

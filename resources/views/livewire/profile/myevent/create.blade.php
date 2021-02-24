@@ -19,6 +19,23 @@
                             </span>
                         @enderror
                     </div>
+                    {{-- <div class="form-group">
+                        <label class="text-muted" for="title">Título:</label>
+                        <div class="input-group mb-3">
+                            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+                                    wire:model="title" wire:dirty.class="bg-primary">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-bars"></span>
+                                </div>
+                            </div>
+                            @error('title')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div> --}}
                     <div class="form-group">
                         <label class="text-muted" for="description">Descripción:</label>
                         <textarea class="form-control @error('description') is-invalid @enderror" name="description" wire:model="description" wire:dirty.class="bg-primary" rows="3"></textarea>

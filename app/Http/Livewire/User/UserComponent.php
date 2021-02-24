@@ -32,6 +32,8 @@ class UserComponent extends Component
 
     public $user_profile, $avatar, $description, $facebook, $instagram, $github, $website, $other, $position;
 
+    public $addDepartament, $nameDepa, $addArea, $nameArea;
+
     public $rules = [
         'nameUser'       => 'required|string|max:100',
         'firstLastname'  => 'required|string|max:100',
@@ -44,6 +46,8 @@ class UserComponent extends Component
         'role'           => 'required',
         'departament'    => 'required',
         'group'          => 'required',
+        'nameDepa'       => 'required',
+        'nameArea'       => 'required',
     ];
 
     protected $queryString = [
@@ -57,12 +61,14 @@ class UserComponent extends Component
         'secondLastname' => 'segundo apellido',
         'phone'          => 'teléfono',
         'name'           => 'nombre de usuario',
-        'email'          => 'email',
-        'corporative'    => 'email corporativo',
+        'email'          => 'email corporativo',
+        'corporative'    => 'email',
         'password'       => 'contraseña',
         'role'           => 'rol',
         'departament'    => 'departamento',
         'group'          => 'área',
+        'nameDepa'       => 'nombre departamento',
+        'nameArea'       => 'nombre área',
     ];
 
     public function mount()
@@ -506,9 +512,117 @@ class UserComponent extends Component
         $this->reset(['search', 'perPage', 'page']);
     }
 
+    public function addDepartament()
+    {
+        $this->addDepartament = true;
+    }
+
+    public function storeDepa()
+    {
+        Gate::authorize('haveaccess', 'departament.create');
+
+        $status  = 'success';
+        $content = 'Se agrego correctamente el departamento';
+
+        $this->validate([
+            'nameDepa'  => 'required|string|max:200|unique:departaments,name',
+        ]);
+
+        try {
+
+            DB::beginTransaction();
+
+            $depa = Departament::create([
+                'name'         => $this->nameDepa,
+                'description'  => $this->nameDepa,
+                'responsable'  => Auth::user()->name,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            $status  = 'error';
+            $content = 'Ocurrió un error al agregar el departamento';
+        }
+
+        session()->flash('process_result', [
+            'status'    => $status,
+            'content'   => $content,
+        ]);
+        $this->cacelaDepa();
+    }
+
+    public function cacelaDepa()
+    {
+        $this->addDepartament = false;
+        $this->nameDepa = null;
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
+    public function addArea()
+    {
+        $this->addArea = true;
+    }
+
+    public function storeArea()
+    {
+        Gate::authorize('haveaccess', 'group.create');
+
+        $status  = 'success';
+        $content = 'Se agrego correctamente el área';
+
+        $this->validate([
+            'nameArea'  => 'required|string|max:200|unique:groups,name',
+        ]);
+
+        try {
+
+            DB::beginTransaction();
+
+            $area = Group::create([
+                'name'         => $this->nameArea,
+                'description'  => $this->nameArea,
+                'responsable'  => Auth::user()->name,
+            ]);
+            $depa = Departament::where('id', '=', $this->departament)->first();
+            /* if ($depa) { */
+            $depa->groups()->attach($area->id);
+            /* } */
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            $status  = 'error';
+            $content = 'Ocurrió un error al agregar el área';
+        }
+
+        session()->flash('process_result', [
+            'status'    => $status,
+            'content'   => $content,
+        ]);
+        $this->cacelaArea();
+    }
+
+    public function cacelaArea()
+    {
+        $this->addArea = false;
+        $this->nameArea = null;
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
     public function render()
     {
-        $roless         = Role::orderBy('name')->where('status', '=', 1)->get();
+        /* $roless         = Role::orderBy('range')->where('status', '=', 1)->orWhere('range', '>', Auth::user()->roles)->get(); */
+
+        $rango = Role::where('name', '=', Auth::user()->getRole())->first();
+
+        $roless         = Role::orderBy('range')->where('range', '>', $rango->range)->get();
 
         $departamentss  = Departament::orderBy('name')->where('status', '=', 1)->get();
 

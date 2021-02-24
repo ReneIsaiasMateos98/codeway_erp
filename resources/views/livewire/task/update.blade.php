@@ -42,14 +42,13 @@
                     <div class="d-flex justify-content-between mb-auto">
                         <div class="form-group justify-content-start">
                             <label class="text-muted" for="start">Inicio:</label>
-                            <h5>{{ $start }}</h5>
-                            {{-- <input type="date" name="start" wire:dirty.class="bg-success"
+                            <input type="date" name="start" wire:dirty.class="bg-success"
                                 class="form-control @error('start') is-invalid @enderror" wire:model="start">
                             @error('start')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror --}}
+                            @enderror
                         </div>
                         <div class="form-group justify-content-end">
                             <label class="text-muted" for="end">Termino:</label>
@@ -62,7 +61,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label class="text-muted" for="informer">Informador:</label>
                         <input type="text" name="informer" wire:dirty.class="bg-success"
                             class="form-control @error('informer') is-invalid @enderror" wire:model="informer">
@@ -81,7 +80,7 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label class="text-muted" for="statu_id">Estado:</label>
                         <select wire:model="statu_id" class="form-control @error('statu_id') is-invalid @enderror" name="statu_id" wire:dirty.class="bg-success">

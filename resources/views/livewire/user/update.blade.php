@@ -9,75 +9,95 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label class="text-muted" for="nameUser">Nombre:</label>
-                        <input type="text" name="nameUser" class="form-control @error('nameUser') is-invalid @enderror"
-                                wire:model="nameUser" wire:dirty.class="bg-success">
-                        @error('nameUser')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <label class="text-muted" for="nameUser">Nombre:</label>
+                                <input type="text" name="nameUser" class="form-control @error('nameUser') is-invalid @enderror"
+                                        wire:model="nameUser" wire:dirty.class="bg-success">
+                                @error('nameUser')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <label class="text-muted" for="firstLastname">Primer Apellido:</label>
+                                <input type="text" name="firstLastname" class="form-control @error('firstLastname') is-invalid @enderror"
+                                        wire:model="firstLastname" wire:dirty.class="bg-success">
+                                @error('firstLastname')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="form-group">
+                                <label class="text-muted" for="secondLastname">Segundo Apellido:</label>
+                                <input type="text" name="secondLastname" class="form-control @error('secondLastname') is-invalid @enderror"
+                                        wire:model="secondLastname" wire:dirty.class="bg-success">
+                                @error('secondLastname')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="firstLastname">Primer Apellido:</label>
-                        <input type="text" name="firstLastname" class="form-control @error('firstLastname') is-invalid @enderror"
-                                wire:model="firstLastname" wire:dirty.class="bg-success">
-                        @error('firstLastname')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="text-muted" for="phone">Teléfono:</label>
+                                <input type="number" name="phone" class="form-control @error('phone') is-invalid @enderror"
+                                        wire:model="phone" wire:dirty.class="bg-success">
+                                @error('phone')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="text-muted" for="name">Nombre de Usuario:</label>
+                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                                        wire:model="name" wire:dirty.class="bg-success">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="secondLastname">Segundo Apellido:</label>
-                        <input type="text" name="secondLastname" class="form-control @error('secondLastname') is-invalid @enderror"
-                                wire:model="secondLastname" wire:dirty.class="bg-success">
-                        @error('secondLastname')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="phone">Teléfono:</label>
-                        <input type="number" name="phone" class="form-control @error('phone') is-invalid @enderror"
-                                wire:model="phone" wire:dirty.class="bg-success">
-                        @error('phone')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="name">Nombre de Usuario:</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                                wire:model="name" wire:dirty.class="bg-success">
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="email">Email:</label>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                                wire:model="email" wire:dirty.class="bg-success">
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label class="text-muted" for="corporative">Email Corporativo:</label>
-                        <input type="email" name="corporative" class="form-control @error('corporative') is-invalid @enderror"
-                                wire:model="corporative" wire:dirty.class="bg-success">
-                        @error('corporative')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="text-muted" for="email">Email Corporativo:</label>
+                                <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                        wire:model="email" wire:dirty.class="bg-success">
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <label class="text-muted" for="corporative">Email:</label>
+                                <input type="email" name="corporative" class="form-control @error('corporative') is-invalid @enderror"
+                                        wire:model="corporative" wire:dirty.class="bg-success">
+                                @error('corporative')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
                     {{-- <div class="form-group">
                         <label class="text-muted" for="password">Contraseña:</label>

@@ -84,6 +84,12 @@ class MytaskComponent extends Component
 
         $this->usuario = Auth::user()->name;
         $this->responsable = Auth::user()->name;
+
+        $fecha = Carbon::now();
+
+        $this->inicia  = $fecha->format('Y-m-d');
+        $this->termina = $fecha->addDay()->format('Y-m-d');
+
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -96,7 +102,7 @@ class MytaskComponent extends Component
                 'description'   => 'required|string',
                 'temporary'     => 'file|max:10000|nullable',
                 'inicia'        => 'required|date|after_or_equal:today',
-                'termina'       => 'required|date|after_or_equal:start',
+                'termina'       => 'required|date|after_or_equal:inicia',
                 'informer'      => 'required|string',
                 'responsable'   => 'required|string',
                 'statu_id'      => 'required',
@@ -130,7 +136,7 @@ class MytaskComponent extends Component
             'description'   => 'required|string|',
             'temporary'     => 'file|max:10000|nullable',
             'inicia'        => 'required|date|after_or_equal:today',
-            'termina'       => 'required|date|after_or_equal:start',
+            'termina'       => 'required|date|after_or_equal:inicia',
             'informer'      => 'required|string',
             'responsable'   => 'required|string',
             'statu_id'      => 'required',
@@ -363,6 +369,11 @@ class MytaskComponent extends Component
         ]);
 
         $this->responsable = Auth::user()->name;
+        $fecha = Carbon::now();
+
+        $this->inicia  = $fecha->format('Y-m-d');
+        $this->termina = $fecha->addDay()->format('Y-m-d');
+        
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -379,11 +390,6 @@ class MytaskComponent extends Component
         $priorities = Priority::orderBy('description')->where('status', '=', 1)->get();
 
         $informador = "";
-
-        $fecha = Carbon::now();
-
-        $this->inicia  = $fecha->format('Y-m-d');
-        $this->termina = $fecha->addDay()->format('Y-m-d');
 
         return view(
             'livewire.profile.mytask-component',

@@ -11,7 +11,6 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\PeriodController;
 use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PreuserController;
 use App\Http\Controllers\PriorityController;
 use App\Http\Controllers\ProjectController;
@@ -56,8 +55,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('permission', PermissionController::class)->names('permission');
 
-    Route::resource('position', PositionController::class)->names('position');
-
     Route::resource('preuser', PreuserController::class)->names('preuser');
 
     Route::resource('priority', PriorityController::class)->names('priority');
@@ -75,5 +72,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user', UserController::class)->names('user');
 
     Route::resource('vacant', VacantController::class)->names('vacant');
-    
+
 });

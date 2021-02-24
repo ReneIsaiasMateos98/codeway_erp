@@ -56,6 +56,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="text-muted" for="range">Rango:</label>
+                                <input type="number" name="range" wire:dirty.class="bg-success"
+                                    class="form-control @error('range') is-invalid @enderror" wire:model="range">
+                                @error('range')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            {{-- <div class="form-group">
                                 <label class="text-muted" for="responsable">Responsable:</label>
                                 <input type="text" name="responsable" wire:dirty.class="bg-success" disabled
                                     class="form-control @error('responsable') is-invalid @enderror" wire:model="responsable">
@@ -64,7 +74,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             <div class="form-group">
                                 <label class="text-muted" for="color">Estado:</label><br>
                                 <div class="custom-control custom-radio custom-control-inline">

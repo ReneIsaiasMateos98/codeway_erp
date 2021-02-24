@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->string('slug');
             $table->text('description');
             $table->string('file')->nullable();
-            $table->dateTime('start');
+            $table->date('start');
             $table->date('end')->nullable();
             $table->string('informer', 100);
             $table->string('responsable', 100);

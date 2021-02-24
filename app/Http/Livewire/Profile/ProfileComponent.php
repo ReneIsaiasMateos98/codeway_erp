@@ -121,9 +121,9 @@ class ProfileComponent extends Component
             'name'          => 'required|string|max:200|unique:users,name, ' . $this->user->id,
             'description'   => 'required|string|max:500',
 
-            'nameUser'          => 'required|string|max:200',
-            'firstLastname'     => 'required|string|max:200',
-            'secondLastname'    => 'required|string|max:200',
+            'nameUser'          => 'required|alpha|max:200',
+            'firstLastname'     => 'required|alpha|max:200|',
+            'secondLastname'    => 'required|alpha|max:200',
             'phone'             => 'required|numeric|digits_between:10,13|unique:users,phone, ' . $this->user->id,
             'email'             => 'required|email|unique:users,email, ' . $this->user->id,
             'corporative'       => 'required|email|unique:users,corporative, ' . $this->user->id,
@@ -265,7 +265,7 @@ class ProfileComponent extends Component
     public function saveProfile()
     {
         $this->validate([
-            'birthday'     => 'required|date|nullable',
+            'birthday'     => 'date|nullable',
             'facebook'     => 'string|max:200|nullable|unique:profiles,facebook, ' . $this->profile->id,
             'instagram'    => 'string|max:200|nullable|unique:profiles,instagram, ' . $this->profile->id,
             'github'       => 'string|max:200|nullable|unique:profiles,github, ' . $this->profile->id,

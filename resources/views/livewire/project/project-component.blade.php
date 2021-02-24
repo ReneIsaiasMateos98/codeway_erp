@@ -54,7 +54,8 @@
                                     <img width="100 rem" style="height: 4rem" class="rounded-circle" class="rounded-sm" src="{{ asset('storage/projects/' . $project->avatar) }}" alt="{{ $project->avatar }}">
                                 </th>
                                 <td>{{ $project->key }}</td>
-                                <td><a class="color-bg" href="{{ route('project.show', $project) }}">{{ $project->name }}</a></td>
+                                <td>{{ $project->name }}</td>
+                                {{-- <td><a class="color-bg" href="{{ route('project.show', $project) }}">{{ $project->name }}</a></td> --}}
                                 <td>{{ $project->responsable }}</td>
                                 <td>
                                     @if($project->status == 1)

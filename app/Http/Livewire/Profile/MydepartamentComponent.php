@@ -68,6 +68,7 @@ class MydepartamentComponent extends Component
                 ]);
                 $this->reset(['message']);
                 $this->mount();
+                $this->render();
             }
             DB::commit();
         } catch (\Throwable $th) {

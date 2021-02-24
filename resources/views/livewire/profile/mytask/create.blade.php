@@ -41,7 +41,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="inicia">Inicio:</label>
+                                <label class="text-muted" for="inicia">Fecha inicio:</label>
                                 <input type="date" name="inicia" class="form-control @error('inicia') is-invalid @enderror"
                                         wire:model="inicia" wire:dirty.class="bg-primary">
                                 @error('inicia')
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="termina">Termino:</label>
+                                <label class="text-muted" for="termina">Fecha termino:</label>
                                 <input type="date" name="termina" class="form-control @error('termina') is-invalid @enderror"
                                         wire:model="termina" wire:dirty.class="bg-primary">
                                 @error('termina')

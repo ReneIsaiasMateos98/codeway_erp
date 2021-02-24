@@ -22,6 +22,7 @@ class CreateRolesTable extends Migration
             $table->enum('fullAccess', ['yes', 'no'])->nullable();
             $table->boolean('status')->default('1');
             $table->string('responsable', 100);
+            $table->integer('range')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

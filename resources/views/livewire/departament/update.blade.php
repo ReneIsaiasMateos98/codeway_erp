@@ -42,7 +42,7 @@
                                                 @endif
                                             @endisset
                                             >
-                                            {{ $usuario->name }}
+                                            {{ $usuario->nameUser }} {{ $usuario->firstLastname }} {{ $usuario->secondLastname }}
                                         </option>
                                     @endforeach
                                 </select>

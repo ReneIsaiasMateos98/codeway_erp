@@ -56,6 +56,16 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="text-muted" for="range">Rango :</label>
+                                <input type="number" name="range" class="form-control @error('range') is-invalid @enderror"
+                                        wire:model="range" wire:dirty.class="bg-primary">
+                                @error('range')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            {{-- <div class="form-group">
                                 <label class="text-muted" for="responsable">Responsable:</label>
                                 <input type="text" name="responsable" class="form-control @error('responsable') is-invalid @enderror"
                                         wire:model="responsable" wire:dirty.class="bg-primary" disabled>
@@ -64,7 +74,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
+                            </div> --}}
                         </form>
                     </div>
                     @if ($fullAccess != "yes")

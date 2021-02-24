@@ -32,6 +32,7 @@ class Role extends Model
         'fullAccess',
         'status',
         'responsable',
+        'range',
     ];
 
     /* Un rol pertence a uno o muchos usuarios */

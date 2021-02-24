@@ -18,7 +18,7 @@ class RoleComponent extends Component
 
     protected $paginationTheme = 'bootstrap';
 
-    public $role_id, $name, $slug, $description, $fullAccess, $responsable, $status, $created_at, $updated_at, $accion = "store";
+    public $role_id, $name, $slug, $description, $fullAccess, $responsable, $status, $range, $created_at, $updated_at, $accion = "store";
 
     public $search = '', $perPage = '10', $page = 1, $total;
 
@@ -30,6 +30,7 @@ class RoleComponent extends Component
         'description'  => 'required|string',
         'resposanble'  => 'required|string',
         'fullAccess'   => 'required|in:yes,no',
+        'range'        => 'required|numeric|max:20|min:1',
     ];
 
     protected $queryString = [
@@ -43,6 +44,7 @@ class RoleComponent extends Component
         'description'   => 'descripción',
         'resposanble'   => 'responsable',
         'fullAccess'    => 'acceso total',
+        'range'         => 'rango',
     ];
 
     public function mount()
@@ -64,6 +66,7 @@ class RoleComponent extends Component
                 'description'  => 'required|string',
                 'responsable'  => 'required|string',
                 'fullAccess'   => 'required|in:yes,no',
+                'range'        => 'required|numeric|max:20|min:1',
             ]);
         } else {
             $this->validateOnly($propertyName, [
@@ -72,6 +75,7 @@ class RoleComponent extends Component
                 'description'  => 'required|string',
                 'responsable'  => 'required|string',
                 'fullAccess'   => 'required|in:yes,no',
+                'range'        => 'required|numeric|max:20|min:1',
             ]);
         }
         $this->slug = Str::slug($this->name, '.');
@@ -87,6 +91,7 @@ class RoleComponent extends Component
             'description'  => 'required|string',
             'responsable'  => 'required|string',
             'fullAccess'   => 'required|in:yes,no',
+            'range'        => 'required|numeric|max:20|min:1',
         ]);
 
         $status  = 'success';
@@ -102,6 +107,7 @@ class RoleComponent extends Component
                 'description'   => $this->description,
                 'responsable'   => Auth::user()->name,
                 'fullAccess'    => $this->fullAccess,
+                'range'        => $this->range,
             ]);
 
             $role->permissions()->sync($this->permission);
@@ -139,6 +145,7 @@ class RoleComponent extends Component
             $this->responsable  = $role->responsable;
             $this->fullAccess   = $role->fullAccess;
             $this->status       = $role->status;
+            $this->range        = $role->range;
             $this->created_at   = $created->format('l jS \\of F Y h:i:s A');
             $this->updated_at   = $updated->format('l jS \\of F Y h:i:s A');
 
@@ -176,6 +183,7 @@ class RoleComponent extends Component
             $this->responsable  = $role->responsable;
             $this->fullAccess   = $role->fullAccess;
             $this->status       = $role->status;
+            $this->range        = $role->range;
             $this->accion       = "update";
 
             foreach ($role->permissions as $permission) {
@@ -203,6 +211,7 @@ class RoleComponent extends Component
             'description'  => 'required|string',
             'responsable'  => 'required|string',
             'fullAccess'   => 'required|in:yes,no',
+            'range'        => 'required|numeric|max:20|min:1',
         ]);
 
         $status  = 'success';
@@ -221,6 +230,7 @@ class RoleComponent extends Component
                     'responsable'   => Auth::user()->name,
                     'fullAccess'    => $this->fullAccess,
                     'status'        => $this->status,
+                    'range'        => $this->range,
                 ]);
 
                 $role->permissions()->sync($this->permission);
@@ -256,7 +266,6 @@ class RoleComponent extends Component
 
             $this->role_id   = $role->id;
             $this->name      = $role->name;
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -310,6 +319,7 @@ class RoleComponent extends Component
             'responsable',
             'fullAccess',
             'status',
+            'range',
             'accion',
             'permission',
             'permission_role',

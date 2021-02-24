@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-    
+
     use SoftDeletes;
 
     /**
@@ -166,5 +166,14 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    public function getRole()
+    {
+        $user = User::find($this->id);
+        if (isset($user->roles[0]->name)) {
+            $role  = $user->roles[0]->name;
+        }
+        return $role;
     }
 }

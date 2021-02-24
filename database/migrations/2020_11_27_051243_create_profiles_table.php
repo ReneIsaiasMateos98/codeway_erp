@@ -25,7 +25,6 @@ class CreateProfilesTable extends Migration
             $table->string('website', 200)->nullable();
             $table->string('other', 200)->nullable();
             $table->boolean('status')->default('1');
-            $table->foreignId('position_id')->nullable()->references('id')->on('positions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->unique()->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->softDeletes();

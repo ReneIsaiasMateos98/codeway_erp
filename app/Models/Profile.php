@@ -44,10 +44,4 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    /* Un perfil tiene una posición */
-    public function position()
-    {
-        return $this->hasOne(Position::class);
-    }
 }

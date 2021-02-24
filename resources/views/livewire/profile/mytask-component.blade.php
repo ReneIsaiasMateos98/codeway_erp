@@ -20,7 +20,7 @@
                     <div class="col-lg-3 col-md-3 col-sm-6">
                         @foreach ($pivote as $pivot)
                             <select wire:model="search" class="form-control" wire:dirty.class="bg-secondary" id="searchs">
-                                <option value="">Usuarios en este proyectó</option>
+                                <option value="">Usuarios en este proyecto</option>
                                 @foreach ($pivot->users as $user)
                                         <option value="{{ $user->name }}">{{ $user->name }}</option>
                                 @endforeach

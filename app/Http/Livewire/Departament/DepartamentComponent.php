@@ -79,7 +79,7 @@ class DepartamentComponent extends Component
         $status = 'success';
         $content = 'Se agregó correctamente el departamento';
 
-        try{
+        try {
 
             DB::beginTransaction();
 
@@ -92,14 +92,12 @@ class DepartamentComponent extends Component
             $departament->groups()->sync($this->group);
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             $status = 'error';
             $content = 'Ocurrió un error al agregar el departamento';
-
         }
 
         session()->flash('process_result', [
@@ -131,7 +129,6 @@ class DepartamentComponent extends Component
             foreach ($departament->groups as $group) {
                 $this->departament_group[] = $group->id;
             }
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -141,7 +138,6 @@ class DepartamentComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -167,7 +163,6 @@ class DepartamentComponent extends Component
             foreach ($departament->groups as $group) {
                 $this->group[] = $group->id;
             }
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -177,7 +172,6 @@ class DepartamentComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -211,14 +205,12 @@ class DepartamentComponent extends Component
             }
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             $status = 'error';
             $content = 'Ocurrió un error al actualizar el departamento';
-
         }
 
         session()->flash('process_result', [
@@ -243,7 +235,6 @@ class DepartamentComponent extends Component
 
             $this->departament_id     = $departament->id;
             $this->name               = $departament->name;
-
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -253,7 +244,6 @@ class DepartamentComponent extends Component
                 'status'    => $status,
                 'content'   => $content,
             ]);
-
         }
     }
 
@@ -271,14 +261,12 @@ class DepartamentComponent extends Component
             Departament::find($this->departament_id)->delete();
 
             DB::commit();
-
         } catch (\Throwable $th) {
 
             DB::rollBack();
 
             $status = 'error';
             $content = 'Ocurrió un error al eliminar el departamento';
-
         }
 
         session()->flash('process_result', [
@@ -316,7 +304,7 @@ class DepartamentComponent extends Component
 
     public function render()
     {
-        $groups = Group::orderBy('id','Asc')->where('status', '=', 1)->get();
+        $groups = Group::orderBy('id', 'Asc')->where('status', '=', 1)->get();
 
         if ($this->search != '') {
             $this->page = 1;

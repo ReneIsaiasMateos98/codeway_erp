@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Departament;
+use App\Models\Group;
 use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -37,9 +38,9 @@ class RolSeeder extends Seeder
             'firstLastname'     => '',
             'secondLastname'    => '',
             'phone'             => '',
-            'name'              => 'Canserbero',
-            'email'             => 'admin@admin.com',
-            'corporative'       => 'admin@codewaymx.com',
+            'name'              => 'Administrador',
+            'email'             => 'admin@codewaymx.com',
+            'corporative'       => 'admin@admin.com',
             'password'          => Hash::make('maquiabelico'),
         ]);
 
@@ -50,6 +51,7 @@ class RolSeeder extends Seeder
             'description'   => 'Es el rol que solo desempeña el usuario administrador',
             'fullAccess'    => 'yes',
             'responsable'   => 'Administrador',
+            'range'         => '1',
         ]);
 
         /* Creamos un rol que se asigne a los usuarios por defecto */
@@ -59,11 +61,18 @@ class RolSeeder extends Seeder
             'description'   => 'Rol que se le asigna a un usuario, tiene los permisos basicos',
             'fullAccess'    => 'no',
             'responsable'   => 'Administrador',
+            'range'         => '2',
         ]);
 
         $departamentadmin = Departament::create([
-            'name'          => 'Admin',
+            'name'          => 'Administrador',
             'description'   => 'Departamento que es para el usuario administrador del sistema',
+            'responsable'   => 'Administrador',
+        ]);
+
+        $areaadmin  = Group::create([
+            'name'          => 'Administrador',
+            'description'   => 'Área que es para el usuario administrador del sistema',
             'responsable'   => 'Administrador',
         ]);
 
@@ -77,7 +86,6 @@ class RolSeeder extends Seeder
             'github'       => '',
             'website'      => '',
             'other'        => '',
-            'position_id'  => null,
             'user_id'      => $useradmin->id,
         ]);
 
@@ -86,5 +94,8 @@ class RolSeeder extends Seeder
 
         /* Sincronizamos el usuario administrador con el departamento de administrador */
         $useradmin->departaments()->sync([$departamentadmin->id]);
+
+        /* Sincronizamos el usuario administrador con el área de administrador */
+        $useradmin->groups()->sync([$areaadmin->id]);
     }
 }

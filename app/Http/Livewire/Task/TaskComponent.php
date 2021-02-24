@@ -34,8 +34,8 @@ class TaskComponent extends Component
         'description'   => 'required|string',
         'temporary'     => 'file|max:10000|mimes:jpeg,png|nullable|mimetypes:video/mp4',
         'file'          => 'file|max:10000|mimes:jpeg,png|nullable|mimetypes:video/mp4',
-        'start'         => 'required|date|after:tomorrow',
-        'end'           => 'required|date|after:start',
+        'start'         => 'required|date|after_or_equal:today',
+        'end'           => 'required|date|after_or_equal:start',
         'informer'      => 'required|string|',
         'responsable'   => 'required|string|',
         'statu_id'      => 'required',
@@ -53,8 +53,8 @@ class TaskComponent extends Component
         'description'   => 'descripción',
         'temporary'     => 'archivo',
         'file'          => 'archivo',
-        'start'         => 'fecha de inicio',
-        'end'           => 'fecha terminó',
+        'start'         => 'fecha inicio',
+        'end'           => 'fecha termino',
         'informer'      => 'informador',
         'responsable'   => 'responsable',
         'statu_id'      => 'estado',
@@ -78,8 +78,8 @@ class TaskComponent extends Component
                 'name'          => 'required|string|max:200',
                 'description'   => 'required|string',
                 'temporary'     => 'file|max:10000|nullable',
-                'start'         => 'required|date',
-                'end'           => 'required|date',
+                'start'         => 'required|after_or_equal:today',
+                'end'           => 'required|after_or_equal:start',
                 'informer'      => 'required|string',
                 'responsable'   => 'required|string',
                 'statu_id'      => 'required',
@@ -91,8 +91,8 @@ class TaskComponent extends Component
                 'name'          => 'required|string|max:200',
                 'description'   => 'required|string',
                 'file'          => 'file|max:10000|nullable',
-                'start'         => 'required|date',
-                'end'           => 'required|date',
+                'start'         => 'required|after_or_equal:today',
+                'end'           => 'required|after_or_equal:start',
                 'informer'      => 'required|string',
                 'responsable'   => 'required|string',
                 'statu_id'      => 'required',
@@ -110,8 +110,8 @@ class TaskComponent extends Component
             'name'          => 'required|string|max:200',
             'description'   => 'required|string|',
             'temporary'     => 'file|max:10000|nullable',
-            'start'         => 'required|date',
-            'end'           => 'required|date',
+            'start'         => 'required|after_or_equal:today',
+            'end'           => 'required|after_or_equal:start',
             'informer'      => 'required|string',
             'responsable'   => 'required|string',
             'statu_id'      => 'required',
@@ -269,8 +269,8 @@ class TaskComponent extends Component
             'name'          => 'required|string|max:200',
             'description'   => 'required|string',
             'temporary'     => 'file|max:10000|nullable',
-            'start'         => 'required|date',
-            'end'           => 'required|date',
+            'start'         => 'required|after_or_equal:today',
+            'end'           => 'required|after_or_equal:start',
             'informer'      => 'required|string',
             'responsable'   => 'required|string',
             'statu_id'      => 'required',
@@ -338,7 +338,7 @@ class TaskComponent extends Component
 
             $this->task_id      = $task->id;
             $this->name         = $task->name;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

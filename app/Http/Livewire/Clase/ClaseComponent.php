@@ -21,7 +21,7 @@ class ClaseComponent extends Component
     public $search = '', $perPage = '10', $page = 1, $total, $clase;
 
     public $rules = [
-        'description'  => 'required|string|max:200|unique:class,description',
+        'description'  => 'required|alpha|max:200|unique:class,description',
     ];
 
     protected $queryString = [
@@ -45,11 +45,11 @@ class ClaseComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:class,description',
+                'description' => 'required|alpha|max:200|unique:class,description',
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:class,description,' . $this->class_id,
+                'description' => 'required|alpha|max:200|unique:class,description,' . $this->class_id,
             ]);
         }
     }
@@ -59,7 +59,7 @@ class ClaseComponent extends Component
         Gate::authorize('haveaccess', 'class.create');
 
         $this->validate([
-            'description' => 'required|max:200|unique:class,description',
+            'description' => 'required|alpha|max:200|unique:class,description',
         ]);
 
         $status = 'success';
@@ -156,7 +156,7 @@ class ClaseComponent extends Component
         Gate::authorize('haveaccess', 'class.edit');
 
         $this->validate([
-            'description' => 'required|max:200|unique:class,description,' . $this->class_id,
+            'description' => 'required|alpha|max:200|unique:class,description,' . $this->class_id,
         ]);
 
         $status = 'success';
@@ -202,7 +202,7 @@ class ClaseComponent extends Component
 
             $this->class_id     = $clase->id;
             $this->description  = $clase->description;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

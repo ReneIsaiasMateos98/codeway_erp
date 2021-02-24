@@ -320,29 +320,5 @@
         </div>
         <hr>
     @endcan
-    @can('haveaccess', 'profile.destroy')
-        <div wire:ignore.self class="row">
-            <div class="container col-lg-4 col-md-4">
-                <h4 class="text-muted">Borrar cuenta</h4>
-                <h5 class="text-muted">Elimina permanentemente tu cuenta y datos</h5>
-            </div>
-            <div class="col-lg-8 col-md-8">
-                <div class="container card">
-                    <div class="card-body">
-                        <div class="col-lg-11 col-md-10">
-                            <div class="form-group">
-                                <label class="text-muted" for="color">Esto eliminara tus datos e información</label>
-                                <label class="text-muted" for="color">No será posible volver a recuperar tu cuenta ni tus datos</label><br>
-                                <h4 class="text-danger">¿Seguro que quieres eliminar tu cuenta?</h4>
-                                <div class="col-lg-3 col-md-4 col-sm-4">
-                                    <button class="btn btn-danger btn-block" wire:click.prevent="deleteAcount()">Eliminar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endcan
     @include('custom.message')
 </div>

@@ -26,7 +26,7 @@ class AbsenceComponent extends Component
 
     /* Defino la variable con sus validaciones */
     public $rules = [
-        'description'  => 'required|string|max:200|unique:absences,description',
+        'description'  => 'required|alpha|max:200|unique:absences,description',
     ];
 
     /* Defino excepciones en la busqueda y la página, esto son excepciones que omitira en la busqueda */
@@ -57,12 +57,12 @@ class AbsenceComponent extends Component
         /* Solo se validara si es un nuevo registro */
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:absences,description',
+                'description' => 'required|alpha|unique:absences,description',
             ]);
         /* Solo se validara si es la actualización de un nuevo registro */
         } else {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:absences,description,' . $this->absence_id,
+                'description' => 'required|alpha|unique:absences,description,' . $this->absence_id,
             ]);
         }
     }
@@ -75,7 +75,7 @@ class AbsenceComponent extends Component
 
         /* Validamos */
         $this->validate([
-            'description' => 'required|max:200|unique:absences,description',
+            'description' => 'required|alpha|max:200|unique:absences,description',
         ]);
 
         /* Variables con los informamos al usuario */
@@ -186,7 +186,7 @@ class AbsenceComponent extends Component
         Gate::authorize('haveaccess', 'absence.edit');
 
         $this->validate([
-            'description' => 'required|max:200|unique:absences,description,' . $this->absence_id,
+            'description' => 'required|alpha|max:200|unique:absences,description,' . $this->absence_id,
         ]);
 
         $status = 'success';

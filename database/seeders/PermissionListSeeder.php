@@ -442,50 +442,6 @@ class PermissionListSeeder extends Seeder
         $permission_all[] = $permission->id;
 
         /*
-    Posicion permiso del modelo Position
-    Listar todos los positions
-    */
-        $permission = Permission::create([
-            'name'          => 'Listar las posiciones',
-            'slug'          => 'position.index',
-            'description'   => 'Un usuario puede listar las posiciones',
-        ]);
-        /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
-        /* Ver en detalle a un Posicion */
-        $permission = Permission::create([
-            'name'          => 'Mostrar una posición',
-            'slug'          => 'position.show',
-            'description'   => 'Un usuario puede ver una posición',
-        ]);
-        /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
-        /* Permite crear un nuevo Posicion */
-        $permission = Permission::create([
-            'name'          => 'Agregar una posición',
-            'slug'          => 'position.create',
-            'description'   => 'Un usuario puede agregar una posición',
-        ]);
-        /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
-        /* Permite editar un Posicion */
-        $permission = Permission::create([
-            'name'          => 'Editar una posición',
-            'slug'          => 'position.edit',
-            'description'   => 'Un usuario puede editar una posición',
-        ]);
-        /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
-        /* Permite eliminar un Posicion */
-        $permission = Permission::create([
-            'name'          => 'Eliminar una posición',
-            'slug'          => 'position.destroy',
-            'description'   => 'Un usuario puede eliminar una posición',
-        ]);
-        /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
-
-        /*
     Prioridad permiso del modelo Priority
     Listar todos los prioritys
     */
@@ -538,14 +494,6 @@ class PermissionListSeeder extends Seeder
             'name'          => 'Editar su cuenta',
             'slug'          => 'profile.update',
             'description'   => 'Un usuario puede activar/desactivar su cuenta',
-        ]);
-        /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
-        /* Permite eliminar un Perfil */
-        $permission = Permission::create([
-            'name'          => 'Eliminar su cuenta',
-            'slug'          => 'profile.destroy',
-            'description'   => 'Un usuario puede eliminar su cuenta',
         ]);
         /* Agregamos a la variable permission el id del permiso creado */
         $permission_all[] = $permission->id;
@@ -702,13 +650,13 @@ class PermissionListSeeder extends Seeder
         /* Agregamos a la variable permission el id del permiso creado */
         $permission_all[] = $permission->id;
         /* Permite crear un nuevo Tarea */
-        $permission = Permission::create([
+        /* $permission = Permission::create([
             'name'          => 'Agregar una tarea',
             'slug'          => 'task.create',
             'description'   => 'Un usuario puede agregar una tarea',
-        ]);
+        ]); */
         /* Agregamos a la variable permission el id del permiso creado */
-        $permission_all[] = $permission->id;
+        /* $permission_all[] = $permission->id; */
         /* Permite editar un Tarea */
         $permission = Permission::create([
             'name'          => 'Editar una tarea',

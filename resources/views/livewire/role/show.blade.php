@@ -48,6 +48,10 @@
                                 @endif
                             </div>
                             <div class="form-group">
+                                <label class="text-muted" for="range">Rango:</label>
+                                <h5>{{ $range }}</h5>
+                            </div>
+                            <div class="form-group">
                                 <label class="text-muted" for="created_at">Creado:</label>
                                 <h5>{{ $created_at }}</h5>
                             </div>
@@ -61,7 +65,7 @@
                         <div class="col-lg-6 mb-4">
                             <div class="form-group">
                                 <label class="text-muted text-uppercase" for="permisos">Lista de Permisos</label>
-                                <div class="table-responsive" style="height: 30rem">
+                                <div class="table-responsive" style="height: 40rem">
                                     @foreach ($permissions as $permission)
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" disabled class="custom-control-input"

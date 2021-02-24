@@ -21,7 +21,7 @@ class CategoryComponent extends Component
     public $search = '', $perPage = '10', $total, $category, $page = 1;
 
     public $rules = [
-        'description'  => 'required|string|max:200|unique:categories,description',
+        'description'  => 'required|alpha|max:200|unique:categories,description',
     ];
 
     protected $queryString = [
@@ -45,11 +45,11 @@ class CategoryComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:categories,description',
+                'description' => 'required|alpha|max:200|unique:categories,description',
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:categories,description,' . $this->category_id,
+                'description' => 'required|alpha|max:200|unique:categories,description,' . $this->category_id,
             ]);
         }
     }
@@ -59,7 +59,7 @@ class CategoryComponent extends Component
         Gate::authorize('haveaccess', 'category.create');
 
         $this->validate([
-            'description' => 'required|max:200|unique:categories,description',
+            'description' => 'required|alpha|max:200|unique:categories,description',
         ]);
 
         $status = 'success';
@@ -156,7 +156,7 @@ class CategoryComponent extends Component
         Gate::authorize('haveaccess', 'category.edit');
 
         $this->validate([
-            'description' => 'required|max:200|unique:categories,description,' . $this->category_id,
+            'description' => 'required|alpha|max:200|unique:categories,description,' . $this->category_id,
         ]);
 
         $status = 'success';
@@ -202,7 +202,7 @@ class CategoryComponent extends Component
 
             $this->category_id  = $categories->id;
             $this->description  = $categories->description;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

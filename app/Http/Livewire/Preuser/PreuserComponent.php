@@ -20,8 +20,8 @@ class PreuserComponent extends Component
     public $search = '', $perPage = '10', $page = 1, $total;
 
     public $rules = [
-        'name'         => 'required|string|max:100',
-        'lastname'     => 'required|string|max:100',
+        'name'         => 'required|alpha|max:100',
+        'lastname'     => 'required|alpha|max:100',
         'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
         'email'        => 'required|email|max:100|unique:preusers,email',
     ];
@@ -50,15 +50,15 @@ class PreuserComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'name'         => 'required|string|max:100',
-                'lastname'     => 'required|string|max:100',
+                'name'         => 'required|alpha|max:100',
+                'lastname'     => 'required|alpha|max:100',
                 'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
                 'email'        => 'required|email|max:100|unique:preusers,email',
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'name'         => 'required|string|max:100',
-                'lastname'     => 'required|string|max:100',
+                'name'         => 'required|alpha|max:100',
+                'lastname'     => 'required|alpha|max:100',
                 'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone,' . $this->preuser_id,
                 'email'        => 'required|email|max:100|unique:preusers,email,' . $this->preuser_id,
             ]);
@@ -70,8 +70,8 @@ class PreuserComponent extends Component
         Gate::authorize('haveaccess', 'preuser.create');
 
         $this->validate([
-            'name'         => 'required|string|max:100',
-            'lastname'     => 'required|string|max:100',
+            'name'         => 'required|alpha|max:100',
+            'lastname'     => 'required|alpha|max:100',
             'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
             'email'        => 'required|email|max:100|unique:preusers,email',
         ]);
@@ -178,8 +178,8 @@ class PreuserComponent extends Component
         Gate::authorize('haveaccess', 'preuser.edit');
 
         $this->validate([
-            'name'         => 'required|string|max:100',
-            'lastname'     => 'required|string|max:100',
+            'name'         => 'required|alpha|max:100',
+            'lastname'     => 'required|alpha|max:100',
             'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone,' . $this->preuser_id,
             'email'        => 'required|email|max:100|unique:preusers,email,' . $this->preuser_id,
         ]);

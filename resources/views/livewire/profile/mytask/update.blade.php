@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="start">Inicio:</label>
+                                <label class="text-muted" for="start">Fecha inicio:</label>
                                 <input type="date" name="start" wire:dirty.class="bg-success"
                                     class="form-control @error('start') is-invalid @enderror" wire:model="start">
                                 @error('start')
@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="end">Termino:</label>
+                                <label class="text-muted" for="end">Fecha termino:</label>
                                 <input type="date" name="end" wire:dirty.class="bg-success"
                                     class="form-control @error('end') is-invalid @enderror" wire:model="end">
                                 @error('end')
