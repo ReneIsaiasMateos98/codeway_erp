@@ -52,6 +52,7 @@ class RolSeeder extends Seeder
             'fullAccess'    => 'yes',
             'responsable'   => 'Administrador',
             'range'         => '1',
+            'asignament'    => '0',
         ]);
 
         /* Creamos un rol que se asigne a los usuarios por defecto */
@@ -62,6 +63,7 @@ class RolSeeder extends Seeder
             'fullAccess'    => 'no',
             'responsable'   => 'Administrador',
             'range'         => '2',
+            'asignament'    => '0',
         ]);
 
         $departamentadmin = Departament::create([

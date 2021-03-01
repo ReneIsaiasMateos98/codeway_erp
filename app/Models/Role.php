@@ -33,6 +33,7 @@ class Role extends Model
         'status',
         'responsable',
         'range',
+        'asignament',
     ];
 
     /* Un rol pertence a uno o muchos usuarios */

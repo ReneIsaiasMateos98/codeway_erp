@@ -21,7 +21,7 @@ class StatusComponent extends Component
     public $search = '', $perPage = '10', $page = 1, $total, $task, $statu;
 
     public $rules = [
-        'description'  => 'required|string|max:200|unique:status,description',
+        'description'  => 'required|alpha|max:200|unique:status,description',
     ];
 
     protected $queryString = [
@@ -45,11 +45,11 @@ class StatusComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:status,description',
+                'description' => 'required|alpha|max:200|unique:status,description',
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:200|unique:status,description,' . $this->status_id,
+                'description' => 'required|alpha|max:200|unique:status,description,' . $this->status_id,
             ]);
         }
     }
@@ -59,7 +59,7 @@ class StatusComponent extends Component
         Gate::authorize('haveaccess', 'status.create');
 
         $this->validate([
-            'description' => 'required|max:200|unique:status,description',
+            'description' => 'required|alpha|max:200|unique:status,description',
         ]);
 
         $status  = 'success';
@@ -156,7 +156,7 @@ class StatusComponent extends Component
         Gate::authorize('haveaccess', 'status.edit');
 
         $this->validate([
-            'description' => 'required|max:200|unique:status,description,' . $this->status_id,
+            'description' => 'required|alpha|max:200|unique:status,description,' . $this->status_id,
         ]);
 
         $status  = 'success';
@@ -202,7 +202,7 @@ class StatusComponent extends Component
 
             $this->status_id    = $status->id;
             $this->description  = $status->description;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

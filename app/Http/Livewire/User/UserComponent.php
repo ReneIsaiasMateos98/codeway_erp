@@ -36,8 +36,8 @@ class UserComponent extends Component
 
     public $rules = [
         'nameUser'       => 'required|string|max:100',
-        'firstLastname'  => 'required|string|max:100',
-        'secondLastname' => 'required|string|max:100',
+        'firstLastname'  => 'required|alpha|max:100',
+        'secondLastname' => 'required|alpha|max:100',
         'phone'          => 'required|numeric|digits_between:10,13',
         'name'           => 'required|string|max:100|unique:users,name',
         'email'          => 'required|email:rfc,dns,strict,spoof|max:100|unique:users,email',
@@ -85,8 +85,8 @@ class UserComponent extends Component
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
                 'nameUser'       => 'required|string|max:100',
-                'firstLastname'  => 'required|string|max:100',
-                'secondLastname' => 'required|string|max:100',
+                'firstLastname'  => 'required|alpha|max:100',
+                'secondLastname' => 'required|alpha|max:100',
                 'phone'          => 'required|numeric|digits_between:10,13',
                 'name'           => 'required|string|max:100|unique:users,name',
                 'email'          => 'required|email|max:100|unique:users,email',
@@ -99,8 +99,8 @@ class UserComponent extends Component
         } else {
             $this->validateOnly($propertyName, [
                 'nameUser'       => 'required|string|max:100',
-                'firstLastname'  => 'required|string|max:100',
-                'secondLastname' => 'required|string|max:100',
+                'firstLastname'  => 'required|alpha|max:100',
+                'secondLastname' => 'required|alpha|max:100',
                 'phone'          => 'required|numeric|digits_between:10,13',
                 'name'           => 'required|string|max:100|unique:users,name,' . $this->user_id,
                 'email'          => 'required|email|max:100|unique:users,email,' . $this->user_id,
@@ -119,16 +119,16 @@ class UserComponent extends Component
 
         $this->validate([
             'nameUser'       => 'required|string|max:100',
-            'firstLastname'  => 'required|string|max:100',
-            'secondLastname' => 'required|string|max:100',
+            'firstLastname'  => 'required|alpha|max:100',
+            'secondLastname' => 'required|alpha|max:100',
             'phone'          => 'required|numeric|digits_between:10,13',
             'name'           => 'required|string|max:100|unique:users,name',
             'email'          => 'required|email|max:100|unique:users,email',
             'corporative'    => 'required|email|max:100|unique:users,corporative',
             'password'       => 'required|string|min:8|max:100',
             'role'           => 'required',
-            /* 'departament'    => 'required',
-            'group'          => 'required', */
+            'departament'    => 'required',
+            'group'          => 'required',
         ]);
 
         $status  = 'success';
@@ -156,14 +156,45 @@ class UserComponent extends Component
 
             if ($this->role) {
                 $user->roles()->sync($this->role);
-            }
 
-            if ($this->departament) {
-                $user->departaments()->sync($this->departament);
-            }
+                $asignament = Role::where('id', '=', $this->role)->first();
 
-            if ($this->group) {
-                $user->groups()->sync($this->group);
+                if($asignament->asignament == 1){
+
+                    if ($this->departament) {
+                        $user->departaments()->sync($this->departament);
+
+                        $depa = Departament::where('id', '=', $this->departament)->first();
+                        $depa->update(['responsable' => $this->name]);
+                    }
+
+                    if ($this->group) {
+                        $user->groups()->sync($this->group);
+                    }
+
+                }else if($asignament->asignament == 2){
+
+                    if ($this->departament) {
+                        $user->departaments()->sync($this->departament);
+                    }
+
+                    if ($this->group) {
+                        $user->groups()->sync($this->group);
+
+                        $group = Group::where('id', '=', $this->group)->first();
+                        $group->update(['responsable' => $this->name]);
+                    }
+
+                }else{
+
+                    if ($this->departament) {
+                        $user->departaments()->sync($this->departament);
+                    }
+
+                    if ($this->group) {
+                        $user->groups()->sync($this->group);
+                    }
+                }
             }
 
             $fecha  = Carbon::now();
@@ -362,12 +393,13 @@ class UserComponent extends Component
 
         $this->validate([
             'nameUser'       => 'required|string|max:100',
-            'firstLastname'  => 'required|string|max:100',
-            'secondLastname' => 'required|string|max:100',
+            'firstLastname'  => 'required|alpha|max:100',
+            'secondLastname' => 'required|alpha|max:100',
             'phone'          => 'required|numeric|digits_between:10,13',
             'name'           => 'required|string|max:100|unique:users,name,' . $this->user_id,
             'email'          => 'required|email|max:100|unique:users,email,' . $this->user_id,
             'corporative'    => 'required|email|max:100|unique:users,corporative,' . $this->user_id,
+            'password'       => 'nullable|string|min:8|max:100',
             'role'           => 'required',
             'departament'    => 'required',
             'group'          => 'required',
@@ -395,16 +427,53 @@ class UserComponent extends Component
                     'status'          => $this->status,
                 ]);
 
+                if (isset($this->password)) {
+                    $user->update([
+                        'password'        => Hash::make($this->password),
+                    ]);
+                }
+
                 if ($this->role) {
                     $user->roles()->sync($this->role);
-                }
 
-                if ($this->departament) {
-                    $user->departaments()->sync($this->departament);
-                }
+                    $asignament = Role::where('id', '=', $this->role)->first();
 
-                if ($this->group) {
-                    $user->groups()->sync($this->group);
+                    if($asignament->asignament == 1){
+
+                        if ($this->departament) {
+                            $user->departaments()->sync($this->departament);
+
+                            $depa = Departament::where('id', '=', $this->departament)->first();
+                            $depa->update(['responsable' => $this->name]);
+                        }
+
+                        if ($this->group) {
+                            $user->groups()->sync($this->group);
+                        }
+
+                    }else if($asignament->asignament == 2){
+
+                        if ($this->departament) {
+                            $user->departaments()->sync($this->departament);
+                        }
+
+                        if ($this->group) {
+                            $user->groups()->sync($this->group);
+
+                            $group = Group::where('id', '=', $this->group)->first();
+                            $group->update(['responsable' => $this->name]);
+                        }
+
+                    }else{
+
+                        if ($this->departament) {
+                            $user->departaments()->sync($this->departament);
+                        }
+
+                        if ($this->group) {
+                            $user->groups()->sync($this->group);
+                        }
+                    }
                 }
             }
 
@@ -588,9 +657,9 @@ class UserComponent extends Component
                 'responsable'  => Auth::user()->name,
             ]);
             $depa = Departament::where('id', '=', $this->departament)->first();
-            /* if ($depa) { */
-            $depa->groups()->attach($area->id);
-            /* } */
+            if ($depa) {
+                $depa->groups()->attach($area->id);
+            }
 
             DB::commit();
         } catch (\Throwable $th) {

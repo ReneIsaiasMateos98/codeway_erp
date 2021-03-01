@@ -52,6 +52,16 @@
                                 <h5>{{ $range }}</h5>
                             </div>
                             <div class="form-group">
+                                <label class="text-muted" for="asignament">Asignamiento:</label>
+                                @if ($asignament == "0")
+                                    <h5>Ninguno</h5>
+                                @elseif($asignament == "1")
+                                    <h5>Departamento</h5>
+                                @elseif($asignament == "2")
+                                    <h5>Área</h5>
+                                @endif
+                            </div>
+                            <div class="form-group">
                                 <label class="text-muted" for="created_at">Creado:</label>
                                 <h5>{{ $created_at }}</h5>
                             </div>
@@ -65,7 +75,7 @@
                         <div class="col-lg-6 mb-4">
                             <div class="form-group">
                                 <label class="text-muted text-uppercase" for="permisos">Lista de Permisos</label>
-                                <div class="table-responsive" style="height: 40rem">
+                                <div class="table-responsive" style="height: 45rem">
                                     @foreach ($permissions as $permission)
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" disabled class="custom-control-input"

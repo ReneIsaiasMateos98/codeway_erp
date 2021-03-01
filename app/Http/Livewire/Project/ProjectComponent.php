@@ -33,6 +33,8 @@ class ProjectComponent extends Component
 
     public $user = [], $projects_users = [], $message;
 
+    public $addClass, $claseNew, $addCategory, $categoriaNew;
+
     public $rules = [
         'avatar'        => 'image|mimes:jpeg,png|max:5000',
         'key'           => 'required|string|max:100|unique:projects,key',
@@ -57,6 +59,8 @@ class ProjectComponent extends Component
         'responsable'   => 'responsable',
         'clas_id'       => 'clase',
         'category_id'   => 'categoría',
+        'claseNew'      => 'clase',
+        'categoriaNew'  => 'categoría',
     ];
 
     public function mount()
@@ -135,6 +139,10 @@ class ProjectComponent extends Component
             ]);
 
             $project->users()->sync($this->user);
+
+            $respon = User::where('name', '=', $this->responsable)->first();
+
+            $project->users()->sync($respon->id);
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -291,6 +299,10 @@ class ProjectComponent extends Component
                 ]);
 
                 $project->users()->sync($this->user);
+
+                $respon = User::where('name', '=', $this->responsable)->first();
+
+                $project->users()->sync($respon->id);
             }
 
             DB::commit();
@@ -326,7 +338,7 @@ class ProjectComponent extends Component
             $this->key          = $project->key;
             $this->name         = $project->name;
             $this->avatar       = $project->avatar;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';
@@ -399,6 +411,102 @@ class ProjectComponent extends Component
     public function clear()
     {
         $this->reset(['search', 'perPage', 'page']);
+    }
+
+    public function addClass()
+    {
+        $this->addClass = true;
+    }
+
+    public function storeClass()
+    {
+        Gate::authorize('haveaccess', 'class.create');
+
+        $status  = 'success';
+        $content = 'Se agrego correctamente la clase';
+
+        $this->validate([
+            'claseNew' => 'required|alpha|max:200|unique:class,description',
+        ]);
+
+        try {
+
+            DB::beginTransaction();
+
+            $depa = Clas::create([
+                'description'  => $this->claseNew,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            $status  = 'error';
+            $content = 'Ocurrió un error al agregar la clase';
+        }
+
+        session()->flash('process_result', [
+            'status'    => $status,
+            'content'   => $content,
+        ]);
+        $this->cancelaClass();
+    }
+
+    public function cancelaClass()
+    {
+        $this->addClass = false;
+        $this->claseNew = null;
+        $this->resetErrorBag();
+        $this->resetValidation();
+    }
+
+    public function addCategory()
+    {
+        $this->addCategory = true;
+    }
+
+    public function storeCategory()
+    {
+        Gate::authorize('haveaccess', 'category.create');
+
+        $status  = 'success';
+        $content = 'Se agrego correctamente la categoria';
+
+        $this->validate([
+            'categoriaNew'  => 'required|alpha|max:200|unique:categories,description',
+        ]);
+
+        try {
+
+            DB::beginTransaction();
+
+            $depa = Category::create([
+                'description'  => $this->categoriaNew,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+
+            $status  = 'error';
+            $content = 'Ocurrió un error al agregar la categoria';
+        }
+
+        session()->flash('process_result', [
+            'status'    => $status,
+            'content'   => $content,
+        ]);
+        $this->cancelaCategory();
+    }
+
+    public function cancelaCategory()
+    {
+        $this->addCategory = false;
+        $this->categoriaNew = null;
+        $this->resetErrorBag();
+        $this->resetValidation();
     }
 
     public function render()

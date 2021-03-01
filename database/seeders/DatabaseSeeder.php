@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             Estos se encargaran de llenar con algunos datos la base de datos
         */
 
-        $this->call(AbsenceSeeder::class);
+        /* $this->call(AbsenceSeeder::class);
 
         $this->call(CategorySeeder::class);
 
@@ -30,17 +30,17 @@ class DatabaseSeeder extends Seeder
 
         $this->call(GroupSeeder::class);
 
+        $this->call(PrioritySeeder::class);
+
+        $this->call(StatusSeeder::class);
+
+        $this->call(TypeSeeder::class); */
+
         $this->call(PeriodSeeder::class);
 
         $this->call(PermissionListSeeder::class);
 
-        $this->call(PrioritySeeder::class);
-
         $this->call(RolSeeder::class);
-
-        $this->call(StatusSeeder::class);
-
-        $this->call(TypeSeeder::class);
 
         /* Position::factory(10)->create(); */
 

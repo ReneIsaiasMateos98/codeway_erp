@@ -21,7 +21,7 @@ class TypeComponent extends Component
     public $search = '', $perPage = '10', $page = 1, $total, $type;
 
     public $rules = [
-        'description'  => 'required|string|max:100|unique:types,description',
+        'description'  => 'required|alpha|max:100|unique:types,description',
     ];
 
     protected $queryString = [
@@ -45,11 +45,11 @@ class TypeComponent extends Component
     {
         if ($this->accion == "store") {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:100|unique:types,description',
+                'description' => 'required|alpha|max:100|unique:types,description',
             ]);
         } else {
             $this->validateOnly($propertyName, [
-                'description' => 'required|max:100|unique:types,description,' . $this->type_id,
+                'description' => 'required|alpha|max:100|unique:types,description,' . $this->type_id,
             ]);
         }
     }
@@ -59,7 +59,7 @@ class TypeComponent extends Component
         Gate::authorize('haveaccess', 'type.create');
 
         $this->validate([
-            'description' => 'required|max:100|unique:types,description',
+            'description' => 'required|alpha|max:100|unique:types,description',
         ]);
 
         $status  = 'success';
@@ -156,7 +156,7 @@ class TypeComponent extends Component
         Gate::authorize('haveaccess', 'type.edit');
 
         $this->validate([
-            'description' => 'required|max:100|unique:types,description,' . $this->type_id,
+            'description' => 'required|alpha|max:100|unique:types,description,' . $this->type_id,
         ]);
 
         $status  = 'success';
@@ -202,7 +202,7 @@ class TypeComponent extends Component
             $this->type_id      = $type->id;
             $this->description  = $type->description;
             $this->status       = $type->status;
-            
+
         } catch (\Throwable $th) {
 
             $status = 'error';

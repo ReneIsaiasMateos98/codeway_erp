@@ -15,9 +15,9 @@ class CreateComponent extends Component
     public $vacant_id, $title, $description;
 
     public $rules = [
-        'name'         => 'required|string|max:100',
-        'lastname'     => 'required|string|max:100',
-        'phone'        => 'required|numeric|unique:preusers,phone',
+        'name'         => 'required|alpha|max:100',
+        'lastname'     => 'required|alpha|max:100',
+        'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
         'email'        => 'required|email|max:100|unique:preusers,email',
     ];
 
@@ -37,9 +37,9 @@ class CreateComponent extends Component
     public function store()
     {
         $this->validate([
-            'name'         => 'required|string|max:100',
-            'lastname'     => 'required|string|max:100',
-            'phone'        => 'required|numeric|unique:preusers,phone',
+            'name'         => 'required|alpha|max:100',
+            'lastname'     => 'required|alpha|max:100',
+            'phone'        => 'required|numeric|digits_between:10,13|unique:preusers,phone',
             'email'        => 'required|email|max:100|unique:preusers,email',
         ]);
 

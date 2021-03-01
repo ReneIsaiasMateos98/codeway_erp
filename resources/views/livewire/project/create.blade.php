@@ -78,48 +78,112 @@
                     </div>
                     <div class="form-group">
                         <label class="text-muted" for="clas_id">Clase:</label>
-                        <select wire:model="clas_id" class="form-control @error('clas_id') is-invalid @enderror" name="clas_id" wire:dirty.class="bg-primary">
-                            <option value="">--Seleccione la clase--</option>
-                            @foreach($clases as $clase)
-                                <option  value="{{ $clase->id }}"
-                                    @isset( $clase->description )
-                                        @if( $clase->description )
-                                            selected
-                                        @endif
-                                    @endisset
-                                    >
-                                    {{ $clase->description }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('clas_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <div class="row">
+                            <div class="col-11">
+                                <select wire:model="clas_id" class="form-control @error('clas_id') is-invalid @enderror" name="clas_id" wire:dirty.class="bg-primary">
+                                    <option value="">--Seleccione la clase--</option>
+                                    @foreach($clases as $clase)
+                                        <option  value="{{ $clase->id }}"
+                                            @isset( $clase->description )
+                                                @if( $clase->description )
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >
+                                            {{ $clase->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('clas_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            @can('haveaccess', 'class.create')
+                                <div class="col-1">
+                                    <button wire:model="addClass" type="button" wire:click.prevent="addClass()" class="btn btn-light">+</button>
+                                </div>
+                            @endcan
+                        </div>
                     </div>
+                    @if($addClass)
+                        <div class="card-footer">
+                            <div class="form-group">
+                                <label class="text-muted" for="claseNew">Clase:</label>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="text" name="claseNew" class="form-control @error('claseNew') is-invalid @enderror" wire:model="claseNew" wire:dirty.class="bg-primary">
+                                        @error('claseNew')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-1 mx-4">
+                                        <button wire:click.prevent="storeClass()" class="btn btn-primary btn-sm">Agregar</button>
+                                    </div>
+                                    <div class="col-1">
+                                        <button wire:click.prevent="cancelaClass()" class="btn btn-secondary btn-sm">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label class="text-muted" for="category_id">Categoría:</label>
-                        <select wire:model="category_id" class="form-control @error('category_id') is-invalid @enderror"  name="category_id" wire:dirty.class="bg-primary">
-                            <option value="">--Seleccione la categoría--</option>
-                            @foreach($categorias as $categoria)
-                                <option  value="{{ $categoria->id }}"
-                                    @isset( $categoria->description )
-                                        @if( $categoria->description )
-                                            selected
-                                        @endif
-                                    @endisset
-                                    >
-                                    {{ $categoria->description }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('category_id')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <div class="row">
+                            <div class="col-11">
+                                <select wire:model="category_id" class="form-control @error('category_id') is-invalid @enderror"  name="category_id" wire:dirty.class="bg-primary">
+                                    <option value="">--Seleccione la categoría--</option>
+                                    @foreach($categorias as $categoria)
+                                        <option  value="{{ $categoria->id }}"
+                                            @isset( $categoria->description )
+                                                @if( $categoria->description )
+                                                    selected
+                                                @endif
+                                            @endisset
+                                            >
+                                            {{ $categoria->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            @can('haveaccess', 'category.create')
+                                <div class="col-1">
+                                    <button wire:model="addCategory" type="button" wire:click.prevent="addCategory()" class="btn btn-light">+</button>
+                                </div>
+                            @endcan
+                        </div>
                     </div>
+                    @if($addCategory)
+                        <div class="card-footer">
+                            <div class="form-group">
+                                <label class="text-muted" for="categoriaNew">Categoría:</label>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="text" name="categoriaNew" class="form-control @error('categoriaNew') is-invalid @enderror" wire:model="categoriaNew" wire:dirty.class="bg-primary">
+                                        @error('categoriaNew')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-1 mx-4">
+                                        <button wire:click.prevent="storeCategory()" class="btn btn-primary btn-sm">Agregar</button>
+                                    </div>
+                                    <div class="col-1">
+                                        <button wire:click.prevent="cancelaCategory()" class="btn btn-secondary btn-sm">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label class="text-muted text-uppercase" for="user">Lista de usuarios</label>
                         <div>

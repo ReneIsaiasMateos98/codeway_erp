@@ -8,7 +8,7 @@
                     @forelse($user->departaments as $departament)
                         <div class="card">
                             <div class="card-header bg-secondary">
-                                <label class="text-white text-uppercase" for="name"> Departamentos {{ $departament->name }}</label>
+                                <label class="text-white text-uppercase" for="name"> Departamento {{ $departament->name }}</label>
                             </div>
                             <div class="card-body">
                                 <div class="form-group">

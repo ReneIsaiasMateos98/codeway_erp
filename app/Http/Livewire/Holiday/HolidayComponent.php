@@ -64,7 +64,7 @@ class HolidayComponent extends Component
     public function mount()
     {
         $this->total        = count(Holiday::all());
-        $this->responsables  = User::where('status', '=', 1)->get();
+        $this->responsables  = User::get();
         $this->usuarios     = User::with('profile')->where('status', '=', 1)->get();
 
         $this->resetErrorBag();
@@ -254,8 +254,8 @@ class HolidayComponent extends Component
 
         $this->validate([
             /* 'days'          => 'required|numeric|max:100', */
-            'beginDate'     => 'required|date',
-            'endDate'       => 'required|date',
+            /* 'beginDate'     => 'required|date',
+            'endDate'       => 'required|date', */
             /* 'inProcess'     => 'required|numeric|max:100', */
             /* 'taken'         => 'required|numeric|max:100', */
             /* 'available'     => 'numeric|max:100', */
@@ -266,50 +266,64 @@ class HolidayComponent extends Component
             /* 'period_id'     => 'required', */
         ]);
 
-        $status = 'success';
-        $content = 'Se actualizó correctamente la vacación';
+        if($this->responsable != Auth::user()->name){
+            $status = 'error';
+            $content = 'Esta accion solo la puede hacer el responsable del usuario';
 
-        try {
+            session()->flash('process_result', [
+                'status' => $status,
+                'content' => $content,
+            ]);
 
-            DB::beginTransaction();
+            $this->clean();
+            $this->emit('holidayUpdatedEvent');
 
-            if ($this->holiday_id) {
-                $holiday = Holiday::find($this->holiday_id);
+        }else{
 
-                $holiday->update([
-                    'days'         => $this->days,
-                    'beginDate'    => $this->beginDate,
-                    'endDate'      => $this->endDate,
-                    'inProcess'    => $this->inProcess,
-                    'taken'        => $this->taken,
-                    'available'    => $this->available,
-                    'responsable'  => $this->responsable,
-                    'commentable'  => $this->commentable,
-                    'status'       => $this->status,
-                    'absence_id'   => $this->absence_id,
-                    'period_id'    => $this->period_id,
-                ]);
+            $status = 'success';
+            $content = 'Se actualizó correctamente la vacación';
 
-                $holiday->users()->sync($this->user_id);
+            try {
+
+                DB::beginTransaction();
+
+                if ($this->holiday_id) {
+                    $holiday = Holiday::find($this->holiday_id);
+
+                    $holiday->update([
+                        'days'         => $this->days,
+                        'beginDate'    => $this->beginDate,
+                        'endDate'      => $this->endDate,
+                        'inProcess'    => $this->inProcess,
+                        'taken'        => $this->taken,
+                        'available'    => $this->available,
+                        'responsable'  => $this->responsable,
+                        'commentable'  => $this->commentable,
+                        'status'       => $this->status,
+                        'absence_id'   => $this->absence_id,
+                        'period_id'    => $this->period_id,
+                    ]);
+
+                    $holiday->users()->sync($this->user_id);
+                }
+
+                DB::commit();
+            } catch (\Throwable $th) {
+
+                DB::rollBack();
+
+                $status = 'error';
+                $content = 'Ocurrió un error al actualizar la vacación';
             }
 
-            DB::commit();
-        } catch (\Throwable $th) {
+            session()->flash('process_result', [
+                'status'    => $status,
+                'content'   => $content,
+            ]);
 
-            DB::rollBack();
-
-            $status = 'error';
-            $content = 'Ocurrió un error al actualizar la vacación';
+            $this->clean();
+            $this->emit('holidayUpdatedEvent');
         }
-
-        session()->flash('process_result', [
-            'status'    => $status,
-            'content'   => $content,
-
-        ]);
-
-        $this->clean();
-        $this->emit('holidayUpdatedEvent');
     }
 
     public function delete(Holiday $holiday)

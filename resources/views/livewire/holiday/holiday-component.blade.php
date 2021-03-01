@@ -61,7 +61,7 @@
                                     @endisset
                                 </td>
                                 <td>{{ $holiday->days }}</td>
-                                <td>{{ $holiday->beginDate }}</td>
+                                <td>{{ $holiday->created_at }}</td>
                                 <td>{{ $holiday->endDate }}</td>
                                 <td>{{ $holiday->inProcess }}</td>
                                 <td>{{ $holiday->taken }}</td>

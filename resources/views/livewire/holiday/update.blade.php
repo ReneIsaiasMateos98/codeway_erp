@@ -10,15 +10,15 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label class="text-muted text-uppercase" for="inicio">Inicio en {{$beginDate}}</label>
+                        <label class="text-muted text-uppercase" for="inicio">Inicio en {{$created_at}}</label>
                         <label class="text-muted text-uppercase" for="end">Termina en {{$endDate}}</label>
                     </div>
                     <div class="form-group">
                         <label class="text-muted" for="user_id">Usuario </label>
-                        <select wire:model="user_id" class="form-control @error('user_id') is-invalid @enderror"  name="user_id" wire:dirty.class="bg-success">
+                        <select wire:model="user_id" class="form-control @error('user_id') is-invalid @enderror" readonly name="user_id" wire:dirty.class="bg-success">
                             <option value="">--Seleccione al usuario--</option>
                             @foreach($usuarios as $usuario)
-                                <option  value="{{ $usuario->id }}"
+                                <option value="{{ $usuario->id }}"
                                     @isset( $usuario->name )
                                         @if( $usuario->name )
                                             selected
@@ -85,13 +85,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="text-muted" for="beginDate">Inicio:</label>
-                                <input type="date" name="beginDate" wire:dirty.class="bg-success"
-                                    class="form-control @error('beginDate') is-invalid @enderror" wire:model="beginDate">
-                                @error('beginDate')
+                                <label class="text-muted" for="created_at">Inicio:</label>
+                                <input type="datetime-local" name="created_at" wire:dirty.class="bg-success"
+                                    class="form-control @error('created_at') is-invalid @enderror" wire:model="created_at">
+                                @error('created_at')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -110,7 +110,7 @@
                                 @enderror
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label class="text-muted" for="commentable">Comentario:</label>
                         <textarea class="form-control @error('commentable') is-invalid @enderror" name="commentable" wire:model="commentable" wire:dirty.class="bg-success" rows="3"></textarea>
@@ -123,7 +123,7 @@
                     <div class="form-group">
                         <label class="text-muted" for="responsable">Responsable </label>
                         <select wire:model="responsable" class="form-control @error('responsable') is-invalid @enderror"  name="responsable" wire:dirty.class="bg-success">
-                            <option value="">--Seleccione al usuario--</option>
+                            <option value="">--Seleccione al responsable--</option>
                             @foreach($responsables as $responsable)
                                 <option  value="{{ $responsable->name }}"
                                     @isset( $responsable->name )

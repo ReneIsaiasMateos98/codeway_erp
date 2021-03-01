@@ -28,7 +28,7 @@
                             <div class="form-group">
                                 <label class="text-muted" for="slug">Identificador:</label>
                                 <input type="text" name="slug" class="form-control @error('slug') is-invalid @enderror"
-                                        wire:model="slug" wire:dirty.class="bg-primary">
+                                        wire:model="slug" wire:dirty.class="bg-primary" disabled>
                                 @error('slug')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -64,6 +64,21 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="text-muted" for="asignament">Asignamiento:</label><br>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="asignamentNinguno" wire:model="asignament" name="asignament" class="custom-control-input" value="0" checked>
+                                    <label class="custom-control-label" for="asignamentNinguno">Ninguno</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="asignamentDepas" wire:model="asignament" name="asignament" class="custom-control-input" value="1">
+                                    <label class="custom-control-label" for="asignamentDepas">Departamento</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="asignamentAreas" wire:model="asignament" name="asignament" class="custom-control-input" value="2">
+                                    <label class="custom-control-label" for="asignamentAreas">Área</label>
+                                </div>
                             </div>
                             {{-- <div class="form-group">
                                 <label class="text-muted" for="responsable">Responsable:</label>

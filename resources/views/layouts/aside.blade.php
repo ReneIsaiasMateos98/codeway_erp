@@ -13,7 +13,7 @@
                     </a>
                 </li>
 
-                @can('haveaccess','task.index')
+                @can('haveaccess', 'task.index')
                     <li class="nav-item">
                         <a href="{{ route('task.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-tasks"></i>
@@ -22,7 +22,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','type.index')
+                @can('haveaccess', 'type.index')
                     <li class="nav-item">
                         <a href="{{ route('type.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-crop-alt"></i>
@@ -31,7 +31,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','priority.index')
+                @can('haveaccess', 'priority.index')
                     <li class="nav-item">
                         <a href="{{ route('priority.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-list-ol"></i>
@@ -40,7 +40,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','status.index')
+                @can('haveaccess', 'status.index')
                     <li class="nav-item">
                         <a href="{{ route('status.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-spinner"></i>
@@ -49,7 +49,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','project.index')
+                @can('haveaccess', 'project.index')
                     <li class="nav-item">
                         <a href="{{ route('project.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-project-diagram"></i>
@@ -58,7 +58,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','category.index')
+                @can('haveaccess', 'category.index')
                     <li class="nav-item">
                         <a href="{{ route('category.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-boxes"></i>
@@ -67,7 +67,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','class.index')
+                @can('haveaccess', 'class.index')
                     <li class="nav-item">
                         <a href="{{ route('class.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-layer-group"></i>
@@ -76,7 +76,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','holiday.index')
+                @can('haveaccess', 'holiday.index')
                     <li class="nav-item">
                         <a href="{{ route('holiday.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-plane-departure"></i>
@@ -85,7 +85,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','period.index')
+                @can('haveaccess', 'period.index')
                     <li class="nav-item">
                         <a href="{{ route('period.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-thumbtack"></i>
@@ -94,7 +94,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','absence.index')
+                @can('haveaccess', 'absence.index')
                     <li class="nav-item">
                         <a href="{{ route('absence.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-slash"></i>
@@ -105,7 +105,7 @@
 
 
 
-                @can('haveaccess','vacant.index')
+                @can('haveaccess', 'vacant.index')
                     <li class="nav-item">
                         <a href="{{ route('vacant.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-clipboard"></i>
@@ -114,7 +114,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','preuser.index')
+                @can('haveaccess', 'preuser.index')
                     <li class="nav-item">
                         <a href="{{ route('preuser.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-portrait"></i>
@@ -125,7 +125,7 @@
 
 
 
-                @can('haveaccess','user.index')
+                @can('haveaccess', 'user.index')
                     <li class="nav-item">
                         <a href="{{ route('user.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
@@ -134,7 +134,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','event.index')
+                @can('haveaccess', 'event.index')
                     <li class="nav-item">
                         <a href="{{ route('event.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-calendar-check"></i>
@@ -143,7 +143,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','departament.index')
+                @can('haveaccess', 'departament.index')
                     <li class="nav-item">
                         <a href="{{ route('departament.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-building"></i>
@@ -152,7 +152,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','group.index')
+                @can('haveaccess', 'area.index')
                     <li class="nav-item">
                         <a href="{{ route('group.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-friends"></i>
@@ -162,7 +162,7 @@
                 @endcan
 
 
-                @can('haveaccess','role.index')
+                @can('haveaccess', 'role.index')
                     <li class="nav-item">
                         <a href="{{ route('role.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-tag"></i>
@@ -171,7 +171,7 @@
                     </li>
                 @endcan
 
-                @can('haveaccess','permission.index')
+                @can('haveaccess', 'permission.index')
                     <li class="nav-item">
                         <a href="{{ route('permission.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-lock"></i>
@@ -197,12 +197,14 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('myevent') }}" class="nav-link">
-                        <i class="nav-icon fas fa-calendar-check"></i>
-                        <p>Mis Eventos</p>
-                    </a>
-                </li>
+                @can('haveaccess', 'event.index')
+                    <li class="nav-item">
+                        <a href="{{ route('myevent') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-check"></i>
+                            <p>Mis Eventos</p>
+                        </a>
+                    </li>
+                @endcan
 
                 <li class="nav-item">
                     <a href="{{ route('myvacation') }}" class="nav-link">
@@ -214,7 +216,9 @@
                 <hr>
 
                 <button class="btn btn-outline-danger">
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-white">
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="text-white">
                         Cerrar Sesión
                     </a>
                 </button>
